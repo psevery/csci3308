@@ -16,7 +16,7 @@ The basic file layout as I have it (Feel free to change it to whatever makes mor
 	app.js is the server. 
 		I would think this is where we would store and perform most of our game's state and logic. 
 	Public is the stuff stored on the browser. 
-		Inside this is  our HTML files, Images (for pieces and stuff), and CSS stylesheet. 
-	To start the app on local host cd into DoubleJump and run node app.js. Then open up your browser, go to 127.0.0.1:3000 
+		Inside this is  our HTML files (index.html is the main page as index is the identifier for that), Images (for pieces and stuff), and the CSS stylesheet. 
+	To start the app on local host cd into DoubleJump and run node app.js. Then open up your browser, go to 127.0.0.1:3000 (you can change the port to whatever in the app.js and use that port, default = 3000)
 
 
