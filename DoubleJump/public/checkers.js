@@ -1,42 +1,82 @@
-//Doublejump board drawing
-//Test script for using canvassing to display board
+// Doublejump board drawing
+// Test script for using canvassing to display board
 
-//initializing everything, images and canvas
-//setting up canvas
-var canvas = document.getElementById("canvas");
-var context = canvas.getContext("2d");
+// Globals
+var canvas;
+var context;
+var board_img;
+var pieces_img;
 
-//loading images
-var checkerboard = new Image();
-checkerboard.src = "images/checkerboard.jpg";
-var checker = new Image();
-checker.src = "images/checker_images.png";
+var INIT_BOARD =
+  "10101010" +
+  "01010101" +
+  "10101010" +
+  "00000000" +
+  "00000000" +
+  "02020202" +
+  "20202020" +
+  "02020202";
 
-//draw function draws the board and pieces
+
+// <body onload="start()">
+function start() {
+  // Init canvas
+  canvas = document.getElementById("canvas");
+  context = canvas.getContext("2d");
+
+  // Init sprites
+  board_img = new Image();
+  board_img.src = "images/checkerboard.jpg";
+  pieces_img = new Image();
+  pieces_img.src = "images/checker_images.png";
+
+  // Draw sprites
+  draw();
+}
+
+// Draws the board and pieces
 function draw() {
-	//board information 
-	var board = {pieces:"1010101001010101101010100000000000000000020202022020202002020202", topx:0, topy:20, width:9};
+	// Initial board
+	var board = {
+    pieces: INIT_BOARD,
+    topx: 0,
+    topy: 20,
+    width: 9
+  };
 
-	//drawing the board
+	// Drawing the board
 	drawBoard(board);
 }
 
-//drawing a checker. Image=1 draws black checker 2 draws a red checker 3 draws a black king 4 draws a red king
-function drawChecker(image,x,y) {
-	context.drawImage(checker,64*(image-1),0,64,64,x,y,64,64);
+// Drawing a checker piece.
+// image_id is the integer associated with the checker piece
+// 1: black
+// 2: red
+// 3: black king
+// 4: red king
+function drawPiece(image_id, x, y) {
+  // image_id - 1 = convert to 0-based x offset in source image
+  // Each sprite is 64 units wide
+  // 64 * (image_id - 1) is the x coordinate of the left edge of
+  // the desired checker piece sprite.
+	context.drawImage(pieces_img, 64 * (image_id - 1), 0, 64, 64, x, y, 64, 64);
 }
 
-//drawing board
-function drawBoard(_board) {
-	context.drawImage(checkerboard,0,0,600,597,_board.topx,_board.topy,600,597);
-	//reads in the string and will draw checkers based on the character at the ith position in the string
-	for(i=0;i<64;i++) {
-		//if the character at position i is 0, it leaves an empty space
-		if(_board.pieces.charAt(i)!="0"){
-			drawChecker(parseInt(_board.pieces.charAt(i),10),(64+_board.width)*(i%8)+_board.topx+_board.width,Math.floor(i/8)*(64+_board.width)+_board.topy+_board.width);
+// Drawing board
+function drawBoard(board) {
+	context.drawImage(board_img, 0, 0, 600, 597, board.topx, board.topy, 600, 597);
+
+	// Reads in the string and will draw checkers based
+  // on the character at the ith position in the string
+	for (i = 0; i < 64; i++) {
+
+		// If the character at position i is 0, it leaves an empty space
+		if (board.pieces.charAt(i) != "0") {
+			drawPiece(
+          parseInt(board.pieces.charAt(i), 10),
+          (64 + board.width) * (i % 8) + board.topx + board.width,
+          Math.floor(i / 8) * (64 + board.width) + board.topy + board.width
+      );
 		}
 	}
 }
-
-//calling draw
-draw();
