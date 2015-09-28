@@ -28,10 +28,8 @@ function start() {
 
   // Init sprites
   board_img = new Image();
-  board_img.onload = function() {};
   board_img.src = "images/checkerboard.jpg";
   pieces_img = new Image();
-  pieces_img.onload = function() {};
   pieces_img.src = "images/checker_images.png";
 
   // Draw sprites
