@@ -1,11 +1,12 @@
 // Doublejump board drawing
 // Test script for using canvassing to display board
 
+
 // Globals
-var canvas;
-var context;
 var board_img;
 var pieces_img;
+var canvas;
+var context;
 
 var INIT_BOARD =
   "10101010" +
@@ -20,14 +21,17 @@ var INIT_BOARD =
 
 // <body onload="start()">
 function start() {
+
   // Init canvas
   canvas = document.getElementById("canvas");
   context = canvas.getContext("2d");
 
   // Init sprites
   board_img = new Image();
+  board_img.onload = function() {};
   board_img.src = "images/checkerboard.jpg";
   pieces_img = new Image();
+  pieces_img.onload = function() {};
   pieces_img.src = "images/checker_images.png";
 
   // Draw sprites
@@ -80,3 +84,4 @@ function drawBoard(board) {
 		}
 	}
 }
+start();
