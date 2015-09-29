@@ -32,22 +32,19 @@ function start() {
   pieces_img = new Image();
   pieces_img.src = "images/checker_images.png";
 
-  // Draw sprites
-  draw();
-}
-
-// Draws the board and pieces
-function draw() {
-	// Initial board
-	var board = {
+  var board = {
     pieces: INIT_BOARD,
     topx: 0,
     topy: 20,
     width: 9
   };
 
-	// Drawing the board
-	drawBoard(board);
+  // Draw sprites
+  drawBoard(board);
+
+  // Testing addMove
+  addMove(board,"6251");
+  drawBoard(board);
 }
 
 // Drawing a checker piece.
@@ -61,7 +58,7 @@ function drawPiece(image_id, x, y) {
   // Each sprite is 64 units wide
   // 64 * (image_id - 1) is the x coordinate of the left edge of
   // the desired checker piece sprite.
-	context.drawImage(pieces_img, 64 * (image_id - 1), 0, 64, 64, x, y, 64, 64);
+  context.drawImage(pieces_img, 64 * (image_id - 1), 0, 64, 64, x, y, 64, 64);
 }
 
 // Drawing board
@@ -82,4 +79,23 @@ function drawBoard(board) {
 		}
 	}
 }
+
+//Takes in the move and applies it to the board
+//Move notation is <startsquare><endsquare> where square is 
+//<row><column> from the top left corner
+//Example: 1134 moves checker from the top left corner to a square
+//         3 rows down from the top and 4 squares left
+function addMove(board,move) {
+  //getting the indexes of the location in the pieces string of the start and 
+  //destination squares
+  from_index = (parseInt(move.charAt(0), 10)-1)*8+parseInt(move.charAt(1))-1;
+  to_index = (parseInt(move.charAt(2), 10)-1)*8+parseInt(move.charAt(3))-1;
+  //saves the piece type
+  piece_type = board.pieces.substr(from_index,1);
+  //clears the start spot on the board
+  board.pieces = board.pieces.substr(0,from_index) + "0" + board.pieces.substr(from_index+1);
+  //fills the desination spot on the board
+  board.pieces = board.pieces.substr(0,to_index) + piece_type + board.pieces.substr(to_index+1);
+}
+
 start();
