@@ -92,6 +92,9 @@ function addMove(board,move) {
   to_index = (parseInt(move.charAt(2), 10)-1)*8+parseInt(move.charAt(3))-1;
   //saves the piece type
   piece_type = board.pieces.substr(from_index,1);
+  if (checkValidity(move.substr(0,2),move.substr(2,3),piece_type) == false){
+      return;
+  }
   //clears the start spot on the board
   board.pieces = board.pieces.substr(0,from_index) + "0" + board.pieces.substr(from_index+1);
   //fills the desination spot on the board
@@ -103,20 +106,22 @@ function addMove(board,move) {
 start();
 
 //has to be after start
-canvas.addEventListener("mousedown", getPosition, false);
-var themove = "";
-function getPosition(event)
+canvas.addEventListener("mousedown", getMove, false);
+//this keeps track of the current move, it gets reset when the length is 4 
+var currentMove = "";
+//this gets mouse position of two clicks and stores the row collumn in themove
+//it then calls add move and resets themove.
+function getMove(event)
 {
-  //want to find the row collumn pair
+  //we want to find the row collumn pair
   var row;
   var collumn;
-  //geting the x and y location of the mouse
+  //geting the x and y location of the mouse click
   var x = event.x;
   var y = event.y;
   //making x and y relative to the canvas 
   x -= (canvas.offsetLeft);
   y -= (canvas.offsetTop);
-  
   //ugly way to get row and collumn, sorry
     if (x < 80){
       collumn = 1;
@@ -167,15 +172,42 @@ function getPosition(event)
     else if (y < 610){
       row = 8;
     }
-    themove = themove+row+collumn;
-    if (themove.length == 4){
-      console.log(themove);
-      addMove(board,themove);
-      themove = "";
-      console.log(themove);
+
+    currentMove = currentMove+row+collumn;
+    if (currentMove.length == 4){
+      addMove(board,currentMove);
+      currentMove = "";
     }
-    
+}
+
+function checkValidity(startsquare, endsquare, piece_type){
   
+  console.log("checkValidity of startsquare= " + startsquare + " end= "+ endsquare);
+  console.log("piecetype = " + piece_type);
+  if (startsquare == endsquare){
+    return false;
+  }
+  //black normal logic
+  if (piece_type == 1){
+    console.log(startsquare.charAt(0)+ ">"  +parseInt(endsquare.charAt(0)) + "return false");
+    if (parseInt(startsquare.charAt(0)) > parseInt(endsquare.charAt(0))){
+      console.log("here")
+      return false;
+    }
+  }
+  //red normal logic
+  else if (piece_type == 2){
+
+  }
+  //black king logic
+  else if (piece_type == 3){
+
+  }
+  //red king logic
+  else{
+
+  }
+
 }
 
 
