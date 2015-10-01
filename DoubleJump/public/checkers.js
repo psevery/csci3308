@@ -1,6 +1,8 @@
 // Doublejump board drawing
 // Test script for using canvassing to display board
 
+//window.onload = start;
+
 // Globals
 var board_img;
 var pieces_img;
@@ -103,3 +105,21 @@ function addMove(board,move) {
 }
 
 start();
+
+//has to be after start
+canvas.addEventListener("mousedown", getPosition, false);
+
+function getPosition(event)
+{
+  var x = event.x;
+  var y = event.y;
+ // var canvas = document.getElementById("canvas");
+  x -= (canvas.offsetLeft);
+  y -= (canvas.offsetTop);
+  alert (x+ "," +y);
+  //using this get the square a user clicked
+}
+
+
+
+
