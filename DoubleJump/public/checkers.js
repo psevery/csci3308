@@ -1,5 +1,6 @@
 // Doublejump board drawing
 // Test script for using canvassing to display board
+
 //window.onload = start;
 
 // Globals
@@ -7,6 +8,12 @@ var board_img;
 var pieces_img;
 var canvas;
 var context;
+
+// Constants
+var BLACK = 1;
+var RED = 2;
+var BLACK_KING = 3;
+var RED_KING = 4;
 
 var INIT_BOARD =
   "10101010" +
@@ -56,21 +63,20 @@ function drawPiece(image_id, x, y) {
 
 // Drawing board
 function drawBoard(board) {
-	context.drawImage(board_img, 0, 0, 600, 597, board.topx, board.topy, 600, 597);
+  context.drawImage(board_img, 0, 0, 600, 597, board.topx, board.topy, 600, 597);
 
-	// Reads in the string and will draw checkers based
+  // Reads in the string and will draw checkers based
   // on the character at the ith position in the string
-	for (i = 0; i < 64; i++) {
+  for (i = 0; i < 64; i++) {
 
-		// If the character at position i is 0, it leaves an empty space
-		if (board.pieces.charAt(i) != "0") {
-			drawPiece(
-          parseInt(board.pieces.charAt(i), 10),
-          (64 + board.width) * (i % 8) + board.topx + board.width,
-          Math.floor(i / 8) * (64 + board.width) + board.topy + board.width
-      );
-		}
-	}
+    // If the character at position i is 0, it leaves an empty space
+    if (board.pieces.charAt(i) != "0") {
+      drawPiece(
+      parseInt(board.pieces.charAt(i), 10),
+      (64 + board.width) * (i % 8) + board.topx + board.width,
+      Math.floor(i / 8) * (64 + board.width) + board.topy + board.width);
+    }
+  }
 }
 
 //Takes in the move and applies it to the board
@@ -94,9 +100,8 @@ function addMove(board,move) {
 
 }
 
-
-
 start();
+
 //has to be after start
 canvas.addEventListener("mousedown", getPosition, false);
 var themove = "";
