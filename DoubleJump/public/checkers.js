@@ -8,6 +8,8 @@ var board_img;
 var pieces_img;
 var canvas;
 var context;
+//true when reds move, false when blacks move
+var alternator = true;
 
 // Constants
 var BLACK = 1;
@@ -92,15 +94,24 @@ function addMove(board,move) {
   to_index = (parseInt(move.charAt(2), 10)-1)*8+parseInt(move.charAt(3))-1;
   //saves the piece type
   piece_type = board.pieces.substr(from_index,1);
-  if (checkValidity(move.substr(0,2),move.substr(2,3),piece_type) == false){
+  //the piece type on the square moving to (empty if 0)
+  piece_type_to = board.pieces.substr(to_index,1);
+  if (checkValidity(move.substr(0,2),move.substr(2,3),piece_type,piece_type_to) == false){
+      alert("Invalid Move");
       return;
   }
   //clears the start spot on the board
   board.pieces = board.pieces.substr(0,from_index) + "0" + board.pieces.substr(from_index+1);
   //fills the desination spot on the board
   board.pieces = board.pieces.substr(0,to_index) + piece_type + board.pieces.substr(to_index+1);
+  //if a piece has not been jumped, jump is false
+  jump = checkJump(move.substr(0,2),move.substr(2,3),piece_type)
+  if (jump != false){
+    board.pieces = board.pieces.substr(0,jump) + "0" + board.pieces.substr(jump+1);
+    //other colors turn
+  }
+  alternator =! alternator;
   drawBoard(board);
-
 }
 
 start();
@@ -172,32 +183,47 @@ function getMove(event)
     else if (y < 610){
       row = 8;
     }
-
     currentMove = currentMove+row+collumn;
+    //when length is 4 (after two clicks it is ready for addMove)
     if (currentMove.length == 4){
       addMove(board,currentMove);
       currentMove = "";
     }
 }
 
-function checkValidity(startsquare, endsquare, piece_type){
-  
-  console.log("checkValidity of startsquare= " + startsquare + " end= "+ endsquare);
-  console.log("piecetype = " + piece_type);
-  if (startsquare == endsquare){
+function checkValidity(startsquare, endsquare, piece_type, piece_type_to){
+  //checks to make sure it is the correct colors turn
+  if ((piece_type == 1 || piece_type == 3)&& alternator == true){
+    console.log("reds turn");
     return false;
   }
-  //black normal logic
+  if ((piece_type == 2 || piece_type == 4)&& alternator == false){
+    return false;
+  }
+  //checks to see if there is a piece on endsquare. Cant put a piece on another piece.
+  if (piece_type_to != 0){
+    return false;
+  }
+  //piece should not be on red square ever (only evens on odd rows, only odds on even rows)
+  if (parseInt(endsquare.charAt(0))%2 != 0 && parseInt(endsquare.charAt(1))%2==0) {
+    return false;
+  }
+  if (parseInt(endsquare.charAt(0))%2 == 0 && parseInt(endsquare.charAt(1))%2!=0) {
+    return false;
+  }
+  //black normal piece logic
   if (piece_type == 1){
-    console.log(startsquare.charAt(0)+ ">"  +parseInt(endsquare.charAt(0)) + "return false");
+    //only can move down board
     if (parseInt(startsquare.charAt(0)) > parseInt(endsquare.charAt(0))){
-      console.log("here")
       return false;
     }
   }
   //red normal logic
   else if (piece_type == 2){
-
+    //only can move up board
+    if (parseInt(startsquare.charAt(0)) < parseInt(endsquare.charAt(0))){
+      return false;
+    }
   }
   //black king logic
   else if (piece_type == 3){
@@ -209,6 +235,28 @@ function checkValidity(startsquare, endsquare, piece_type){
   }
 
 }
+
+function checkJump(startsquare,endsquare,piece_type){
+  console.log("start= " + startsquare+ "end= " + endsquare)
+  if (Math.abs(parseInt(startsquare.charAt(0))-parseInt(endsquare.charAt(0)))==2 && Math.abs(parseInt(startsquare.charAt(1))-parseInt(endsquare.charAt(1)))==2){
+      //get the square you jumped
+      jumped_square = ""+(parseInt(startsquare.charAt(0))+parseInt(endsquare.charAt(0)))/2+(parseInt(startsquare.charAt(1))+parseInt(endsquare.charAt(1)))/2;
+      //get the type of piece
+      jumped_index = (parseInt(jumped_square.charAt(0), 10)-1)*8+parseInt(jumped_square.charAt(1))-1;
+      jumped_piece_type = board.pieces.substr(jumped_index,1);
+      console.log("Me think you jumped square: " + jumped_square + " of type " + jumped_piece_type);
+      //you better jump a different color
+      if(piece_type != jumped_piece_type){
+        return jumped_index;
+      }
+      else{
+        return false;
+      }
+    }
+  return false;
+}
+
+
 
 
 
