@@ -50,7 +50,7 @@ function start() {
   mouseDown = false;
   movestr = "";
   canvas.addEventListener("mousedown",function(evt){mouseStart(evt,board)},false);
-  document.addEventListener("mouseup",function(evt){mouseEnd(evt,board)},false);
+  canvas.addEventListener("mouseup",function(evt){mouseEnd(evt,board)},false);
   canvas.addEventListener("mousemove",function(evt){mouseMove(evt,board)},false);
 }
 
