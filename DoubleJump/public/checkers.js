@@ -249,9 +249,6 @@ function checkJump(startsquare,endsquare,piece_type){
       if(piece_type != jumped_piece_type){
         return jumped_index;
       }
-      else{
-        return false;
-      }
     }
   return false;
 }
