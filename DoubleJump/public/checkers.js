@@ -7,6 +7,10 @@ var board_img;
 var pieces_img;
 var canvas;
 var context;
+var movestr;
+var mouseDown;
+var pieceBuffer;
+var pieceLocation;
 
 var INIT_BOARD =
   "10101010" +
@@ -25,7 +29,7 @@ function start() {
   // Init canvas
   canvas = document.getElementById("canvas");
   context = canvas.getContext("2d");
-
+  
   // Init sprites
   board_img = new Image();
   board_img.src = "images/checkerboard.jpg";
@@ -40,11 +44,14 @@ function start() {
   };
 
   // Draw sprites
-  drawBoard(board);
+  drawBoard(board,-1);
 
-  // Testing addMove
-  addMove(board,"6251");
-  drawBoard(board);
+  // Init events
+  mouseDown = false;
+  movestr = "";
+  canvas.addEventListener("mousedown",function(evt){mouseStart(evt,board)},false);
+  document.addEventListener("mouseup",function(evt){mouseEnd(evt,board)},false);
+  canvas.addEventListener("mousemove",function(evt){mouseMove(evt,board)},false);
 }
 
 // Drawing a checker piece.
@@ -62,15 +69,16 @@ function drawPiece(image_id, x, y) {
 }
 
 // Drawing board
-function drawBoard(board) {
-	context.drawImage(board_img, 0, 0, 600, 597, board.topx, board.topy, 600, 597);
+function drawBoard(board,mask) {
+  context.clearRect(0,0,canvas.width,canvas.height);
+  context.drawImage(board_img, 0, 0, 600, 597, board.topx, board.topy, 600, 597);
 
 	// Reads in the string and will draw checkers based
   // on the character at the ith position in the string
 	for (i = 0; i < 64; i++) {
 
 		// If the character at position i is 0, it leaves an empty space
-		if (board.pieces.charAt(i) != "0") {
+		if (board.pieces.charAt(i) != "0" && i != mask) {
 			drawPiece(
           parseInt(board.pieces.charAt(i), 10),
           (64 + board.width) * (i % 8) + board.topx + board.width,
@@ -96,6 +104,32 @@ function addMove(board,move) {
   board.pieces = board.pieces.substr(0,from_index) + "0" + board.pieces.substr(from_index+1);
   //fills the desination spot on the board
   board.pieces = board.pieces.substr(0,to_index) + piece_type + board.pieces.substr(to_index+1);
+}
+
+function mouseStart(evt,board) {
+  mouseDown = true;
+  // Builds the first two characters of the piece move using the mouse
+  // location relative to the canvas. Accounts for board width.
+  movestr = (Math.floor((evt.pageY-canvas.offsetTop-board.topy)/(board.width+64))+1).toString()+(Math.floor((evt.pageX-canvas.offsetLeft-board.topx)/(board.width+64))+1).toString();
+  // Saves board location of the piece being selected to mask out that
+  // piece while it is being dragged
+  pieceLocation = 8*(parseInt(movestr.charAt(0),10)-1)+parseInt(movestr.charAt(1),10)-1;
+  pieceBuffer = board.pieces.charAt(pieceLocation);
+}
+
+function mouseEnd(evt,board) {
+  mouseDown = false;
+  movestr = movestr + (Math.floor((evt.pageY-canvas.offsetTop-board.topy)/(board.width+64))+1).toString()+(Math.floor((evt.pageX-canvas.offsetLeft-board.topx)/(board.width+64))+1).toString();
+  addMove(board,movestr);
+  drawBoard(board,-1);
+}
+
+function mouseMove(evt,board) {
+  if(mouseDown == false) {
+    return;
+  }
+  drawBoard(board,pieceLocation);
+  drawPiece(pieceBuffer,evt.pageX-32,evt.pageY-canvas.offsetTop-32);
 }
 
 start();
