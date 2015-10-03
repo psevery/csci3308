@@ -34,19 +34,14 @@ mouse.handler = function (e) {
       mouse.firstClick = false;
 
     } else if (!mouse.firstClick) {
+      board.unhighlight(mouse.last.row, mouse.last.col);
+      mouse.firstClick = true;
 
       if (mouse.clickedEmptySquare(row, col)) {
-        board.unhighlight(mouse.last.row, mouse.last.col);
         var src = mouse.last;
         var dst = { row: row, col: col };
-
         queue.push(new Move(src, dst));
-
-        mouse.firstClick = true;
         player.nextTurn();
-      } else {
-        board.unhighlight(mouse.last.row, mouse.last.col);
-        mouse.firstClick = true;
       }
     }
   }
