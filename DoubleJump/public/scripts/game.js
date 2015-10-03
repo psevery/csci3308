@@ -2,6 +2,7 @@ function update() {
   queue.forEach(function(move) {
     if (move.isValid()) {
       board.exec(move);
+      player.nextTurn();
     }
   });
   queue = [];
