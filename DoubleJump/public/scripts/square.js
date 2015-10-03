@@ -1,17 +1,17 @@
 var square = {
-  side: 50,
+  sidelen: canvas.width / 8,
   // "color" maps indices to colors
-  color: [
-    "none",
+  colors: [
+    "empty",
     "red",
     "grey",
     "yellow",
     "light-grey",
     "light-blue",
   ],
-  // "number" maps colors to indices
-  number: {
-    "none":       0,
+  // "ids" maps colors to id numbers
+  ids: {
+    "empty":      0,
     "red":        1,
     "grey":       2,
     "yellow":     3,
@@ -19,17 +19,19 @@ var square = {
     "light-blue": 5,
   },
 };
-square.numberToFillStyle = function (number) {
-  var color = square.color[number];
-  return fillStyle[color];
+square.color = function (id) {
+  return drawUtils.fillStyles[square.colors[id]];
+};
+square.id = function (color) {
+  return square.ids[color];
 };
 square.draw = function (number, row, col) {
-  context.fillStyle = square.numberToFillStyle(number);
+  context.fillStyle = square.color(number);
   context.beginPath();
   context.arc(
-    square.side * col + square.side / 2,
-    square.side * row + square.side / 2,
-    square.side / 2.5,
+    square.sidelen * col + square.sidelen / 2,
+    square.sidelen * row + square.sidelen / 2,
+    square.sidelen / 2.5,
     0,
     Math.PI * 2,
     true
@@ -37,5 +39,3 @@ square.draw = function (number, row, col) {
   context.closePath();
   context.fill();
 };
-
-

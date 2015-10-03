@@ -1,11 +1,10 @@
 var mouse = {
   firstClick: true,
-  lastClick: { row: 0, col: 0 },
-  savedPiece: 0,
+  last: { row: 0, col: 0 },
 };
 mouse.pixelToGrid = function (x) {
-  return Math.trunc(x / square.side);
-}
+  return Math.trunc(x / square.sidelen);
+};
 mouse.clickedInBounds = function (x, y) {
   if (x < 0 || x > board.width) {
     return false;
@@ -16,46 +15,41 @@ mouse.clickedInBounds = function (x, y) {
   else {
     return true;
   }
-}
-mouse.clickedOwnedPiece = function (x, y) {
-  var row = mouse.pixelToGrid(y);
-  var col = mouse.pixelToGrid(x);
-  if (player.numbers().indexOf(board.squares[row][col]) != -1) {
-    return true;
-  }
-}
-mouse.clickedEmptySquare = function (x, y) {
-  var row = mouse.pixelToGrid(y);
-  var col = mouse.pixelToGrid(x);
-  return board.squares[row][col] == square.number["none"];
-}
-
+};
+mouse.clickedOwnedPiece = function (row, col) {
+  return player.numbers().indexOf(board.matrix[row][col]) != -1;
+};
+mouse.clickedEmptySquare = function (row, col) {
+  return board.matrix[row][col] == square.id("empty");
+};
 mouse.handler = function (e) {
   var x = e.clientX - canvas.offsetLeft;
   var y = e.clientY;
   if (mouse.clickedInBounds(x, y)) {
     var row = mouse.pixelToGrid(y);
     var col = mouse.pixelToGrid(x);
-    if (mouse.firstClick && mouse.clickedOwnedPiece(x, y)) {
-      mouse.savedPiece = board.squares[row][col];
-      board.squares[row][col] = square.number["light-blue"];
-      mouse.lastClick = { row: row, col: col };
+    if (mouse.firstClick && mouse.clickedOwnedPiece(row, col)) {
+      board.highlight(row, col);
+      mouse.last = { row: row, col: col };
       mouse.firstClick = false;
 
     } else if (!mouse.firstClick) {
-      if (mouse.clickedEmptySquare(x, y)) {
-        board.squares[mouse.lastClick.row][mouse.lastClick.col] = mouse.savedPiece;
-        var source = mouse.lastClick;
-        var destination = { row: row, col: col };
-        board.movePiece(source, destination);
+
+      if (mouse.clickedEmptySquare(row, col)) {
+        board.unhighlight(mouse.last.row, mouse.last.col);
+        var src = mouse.last;
+        var dst = { row: row, col: col };
+
+        queue.push(new Move(src, dst));
+
         mouse.firstClick = true;
         player.nextTurn();
       } else {
-        board.squares[mouse.lastClick.row][mouse.lastClick.col] = mouse.savedPiece;
+        board.unhighlight(mouse.last.row, mouse.last.col);
         mouse.firstClick = true;
       }
     }
   }
 }
 
-
+document.addEventListener("mousedown", mouse.handler, false);
