@@ -47,3 +47,22 @@ Square.prototype.draw = function (context) {
     this.drawPiece(context);
   }
 };
+Square.prototype.isEmpty = function () {
+  return this.id == Square.empty;
+};
+Square.prototype.diagonalSquares = function (board) {
+  var dsquares = [];
+  if (!board.squareAt(this.row - 1, this.col - 1).isEmpty()) {
+    dsquares.push(board.squareAt(this.row - 1, this.col - 1));
+  }
+  if (!board.squareAt(this.row - 1, this.col + 1).isEmpty()) {
+    dsquares.push(board.squareAt(this.row - 1, this.col + 1));
+  }
+  if (!board.squareAt(this.row + 1, this.col - 1).isEmpty()) {
+    dsquares.push(board.squareAt(this.row + 1, this.col - 1));
+  }
+  if (!board.squareAt(this.row + 1, this.col + 1).isEmpty()) {
+    dsquares.push(board.squareAt(this.row + 1, this.col + 1));
+  }
+  return dsquares;
+}

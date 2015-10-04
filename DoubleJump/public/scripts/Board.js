@@ -5,7 +5,12 @@ var Board = function (matrix) {
 };
 
 Board.prototype.squareAt = function (row, col) {
-  return new Square(this.matrix[row][col], row, col);
+  if (row < 0 || row > this.rows || col < 0 || col > this.cols) {
+    return null;
+  }
+  else {
+    return new Square(this.matrix[row][col], row, col);
+  }
 }
 
 Board.prototype.move = function(m) {

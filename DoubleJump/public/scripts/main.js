@@ -31,8 +31,8 @@ function main() {
   document.addEventListener("mousedown", mouseDownHandler, false);
 
   function loop() {
-    if (game.move) {
-      if (game.move.isValid()) {
+    if (game.move != null) {
+      if (game.move.isValidOn(game.board)) {
         game.board.move(game.move);
         game.nextTurn();
       }
