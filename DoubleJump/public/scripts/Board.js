@@ -11,12 +11,12 @@ Board.prototype.squareAt = function (row, col) {
   else {
     return new Square(this.matrix[row][col], row, col);
   }
-}
+};
 
 Board.prototype.move = function(m) {
   this.matrix[m.dst.row][m.dst.col] = this.matrix[m.src.row][m.src.col];
   this.matrix[m.src.row][m.src.col] = Square.empty;
-}
+};
 
 Board.prototype.draw = function (context) {
   var black = true;

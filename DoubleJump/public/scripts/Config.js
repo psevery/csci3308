@@ -33,6 +33,7 @@ Config.Square = {
   ],
   backgroundColor: "black",
   empty: 0,
+  highlighted: 5,
 };
 
 Config.Player = {

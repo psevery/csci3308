@@ -18,11 +18,13 @@ function main() {
     var square = (new Click(x, y)).toSquare(game.board);
     if (square) {
       if (game.srcSquare == null && square.owner() == game.currentPlayer) {
+        square.highlight(game.board);
         game.srcSquare = square;
       }
       else if (game.srcSquare) {
         var src = game.srcSquare;
         var dst = square;
+        src.unhighlight(game.board);
         game.move = new Move(src, dst);
         game.srcSquare = null;
       }

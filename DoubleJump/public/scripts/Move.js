@@ -14,7 +14,7 @@ Move.prototype.isValidOn = function (board) {
     validDstSquares.push(board.squareAt(this.src.row + 1, this.src.col + 1));
     for (var i = 0; i < validDstSquares.length; ++i) {
       var square = validDstSquares[i];
-      if (this.dst.row == square.row && this.dst.col == square.col) {
+      if (square && this.dst.row == square.row && this.dst.col == square.col) {
         validDst = true;
         break;
       }

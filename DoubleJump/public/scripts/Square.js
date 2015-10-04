@@ -5,6 +5,7 @@ var Square = function (id, row, col) {
 };
 
 Square.empty = Config.Square.empty;
+Square.highlighted = Config.Square.highlighted;
 Square.len = Config.Square.len;
 Square.fillStyles = Config.Square.fillStyles;
 Square.backgroundColor = Config.Square.backgroundColor;
@@ -49,6 +50,12 @@ Square.prototype.draw = function (context) {
 };
 Square.prototype.isEmpty = function () {
   return this.id == Square.empty;
+};
+Square.prototype.highlight = function (board) {
+  board.matrix[this.row][this.col] = Square.highlighted;
+};
+Square.prototype.unhighlight = function (board) {
+  board.matrix[this.row][this.col] = this.id;
 };
 Square.prototype.diagonalSquares = function (board) {
   var dsquares = [];
