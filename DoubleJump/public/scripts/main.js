@@ -24,9 +24,18 @@ function main() {
       else if (game.srcSquare) {
         var src = game.srcSquare;
         var dst = square;
-        src.unhighlight(game.board);
-        game.move = new Move(src, dst);
-        game.srcSquare = null;
+        if (dst.isEmpty()) {
+          src.unhighlight(game.board);
+          game.move = new Move(src, dst);
+          game.srcSquare = null;
+        } else if (dst.owner() == game.currentPlayer) {
+          src.unhighlight(game.board);
+          game.srcSquare = dst;
+          game.srcSquare.highlight(game.board);
+        } else {
+          src.unhighlight(game.board);
+          game.srcSquare = null;
+        }
       }
     }
   };
