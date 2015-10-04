@@ -43,7 +43,3 @@ Config.Player = {
     4: 2,
   },
 };
-
-Config.Mouse = {
-
-};
