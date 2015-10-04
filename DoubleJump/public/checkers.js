@@ -1,6 +1,6 @@
 // Doublejump board drawing
 // Test script for using canvassing to display board
-
+// Ryan Baten, Peter Delevoryas, Patrick Severy, Andrew Huang
 
 // Globals
 var board_img;
@@ -11,6 +11,7 @@ var movestr;
 var mouseDown;
 var pieceBuffer;
 var pieceLocation;
+var socket = io();
 
 var INIT_BOARD =
   "10101010" +
@@ -43,6 +44,10 @@ function start() {
     width: 9
   };
 
+  pieces_img.onload=function(){main(board,canvas,context,board_img,pieces_img)};
+}
+
+function main(board,canvas,context,board_img,pieces_img) {
   // Draw sprites
   drawBoard(board,-1);
 
@@ -95,6 +100,8 @@ function drawBoard(board,mask) {
 //         3 rows down from the top and 4 squares left
 function addMove(board,move) {
   //getting the indexes of the location in the pieces string of the start and 
+  //socket stuff
+  socket.emit('move',move);
   //destination squares
   from_index = (parseInt(move.charAt(0), 10)-1)*8+parseInt(move.charAt(1))-1;
   to_index = (parseInt(move.charAt(2), 10)-1)*8+parseInt(move.charAt(3))-1;
@@ -118,6 +125,9 @@ function mouseStart(evt,board) {
 }
 
 function mouseEnd(evt,board) {
+  if(mouseDown == false) {
+    return;
+  }
   mouseDown = false;
   movestr = movestr + (Math.floor((evt.pageY-canvas.offsetTop-board.topy)/(board.width+64))+1).toString()+(Math.floor((evt.pageX-canvas.offsetLeft-board.topx)/(board.width+64))+1).toString();
   addMove(board,movestr);
@@ -131,5 +141,3 @@ function mouseMove(evt,board) {
   drawBoard(board,pieceLocation);
   drawPiece(pieceBuffer,evt.pageX-32,evt.pageY-canvas.offsetTop-32);
 }
-
-start();

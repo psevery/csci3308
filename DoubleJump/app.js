@@ -1,16 +1,25 @@
+// Parts of code from http://socket.io/docs/
+// instructions on .use(express.static()) at:
+// http://expressjs.com/starter/static-files.html
+// merged with app.js code from Patrick
+
 var express = require('express');
-
 var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
-
-app.get('/easteregg', function (req, res) {
-  res.send('Hidden page, so sick');
+server.listen(3000, function(){
+  console.log('listening on port 80');
 });
 
 app.use(express.static('public'));
-var server = app.listen(3000, function () {
-  var host = server.address().address;
-  var port = server.address().port;
+//app.get('/', function(req,res){
+//  res.sendFile(__dirname + '/public');
+//});
 
-  console.log('Example app listening at http://%s:%s', host, port);
+io.on('connection',function(socket) {
+  console.log('connection');
+  socket.on('move', function(move){
+    console.log(move);
+  });
 });
