@@ -30,3 +30,6 @@ Board.prototype.draw = function (context) {
     black = !black;
   }
 };
+Board.prototype.hop = function () {
+  console.log('hop');
+};

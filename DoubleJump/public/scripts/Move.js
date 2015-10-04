@@ -3,10 +3,7 @@ var Move = function (src, dst) {
   this.dst = dst;
 };
 
-Move.prototype.isValidOn = function (board) {
-  if (!this.dst.isEmpty()) {
-    return false;
-  }
+Move.prototype.isValidNotHop = function (board) {
   var validDstSquares = [];
   var validDst = false;
   if (this.src.id == 1) {
@@ -34,4 +31,8 @@ Move.prototype.isValidOn = function (board) {
     }
   }
   return validDst;
+};
+
+Move.prototype.isValidHop = function (board) {
+  return false;
 };

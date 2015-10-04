@@ -43,8 +43,11 @@ function main() {
 
   function loop() {
     if (game.move != null) {
-      if (game.move.isValidOn(game.board)) {
+      if (game.move.isValidNotHop(game.board)) {
         game.board.move(game.move);
+        game.nextTurn();
+      } else if (game.move.isValidHop(game.board)) {
+        game.board.hop(game.move);
         game.nextTurn();
       }
       game.move = null;
