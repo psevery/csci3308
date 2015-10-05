@@ -44,7 +44,7 @@ function start() {
     width: 9
   };
 
-  pieces_img.onload=function(){main(board,canvas,context,board_img,pieces_img)};
+  board_img.onload=function(){pieces_img.onload=function(){main(board,canvas,context,board_img,pieces_img)};}
 }
 
 function main(board,canvas,context,board_img,pieces_img) {
@@ -57,6 +57,11 @@ function main(board,canvas,context,board_img,pieces_img) {
   canvas.addEventListener("mousedown",function(evt){mouseStart(evt,board)},false);
   canvas.addEventListener("mouseup",function(evt){mouseEnd(evt,board)},false);
   canvas.addEventListener("mousemove",function(evt){mouseMove(evt,board)},false);
+  //updates board based on server message
+  socket.on('board',function(newboard){
+    board.pieces = newboard;
+    drawBoard(board,-1);
+  });
 }
 
 // Drawing a checker piece.
@@ -102,15 +107,6 @@ function addMove(board,move) {
   //getting the indexes of the location in the pieces string of the start and 
   //socket stuff
   socket.emit('move',move);
-  //destination squares
-  from_index = (parseInt(move.charAt(0), 10)-1)*8+parseInt(move.charAt(1))-1;
-  to_index = (parseInt(move.charAt(2), 10)-1)*8+parseInt(move.charAt(3))-1;
-  //saves the piece type
-  piece_type = board.pieces.substr(from_index,1);
-  //clears the start spot on the board
-  board.pieces = board.pieces.substr(0,from_index) + "0" + board.pieces.substr(from_index+1);
-  //fills the desination spot on the board
-  board.pieces = board.pieces.substr(0,to_index) + piece_type + board.pieces.substr(to_index+1);
 }
 
 function mouseStart(evt,board) {
