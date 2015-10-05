@@ -44,7 +44,7 @@ function start() {
     width: 9
   };
 
-  board_img.onload=function(){pieces_img.onload=function(){main(board,canvas,context,board_img,pieces_img)};}
+  pieces_img.onload=function(){main(board,canvas,context,board_img,pieces_img)};
 }
 
 function main(board,canvas,context,board_img,pieces_img) {
