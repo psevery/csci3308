@@ -148,35 +148,25 @@ Game.prototype.print = function () {
     }
 }
 
-// A function the sends input to the game for debugging
-// purposes. This will be modified or replaced to allow for
-// mouse handling.
-// If you want to test the game with a hard-coded move list,
-// this function will send the moves to the game object
-// and execute the game as if we had made a series of clicks
-function test_input_function(moves_list) {
-    return function() {
-        if (!test_input_function.finished) {
-            test_input_function.finished = true;
-            return moves_list;
+// We can use this function to test the game with
+// different lists of moves!
+Game.prototype.run_move_list = function(move_list) {
+    var moves_sent = false;
+    this.run(function() {
+        if (!moves_sent) {
+            moves_sent = true;
+            return move_list;
         } else {
             return -1;
         }
-    }
-}
-test_input_function.finished = false;
-
-// We can use this function to test the game with
-// different lists of moves!
-function test_game_with_move_list(move_list) {
-    var game = new Game();
-    game.run(test_input_function(move_list));
+    });
 }
 
 // To test the game, change the list of moves, or write
 // a function that runs a test and uses an assertion/etc
 function main() {
-    test_game_with_move_list([
+    var game = new Game();
+    game.run_move_list([
         [[0, 0], [1, 1]],
         [[1, 1], [2, 2]],
     ]);
