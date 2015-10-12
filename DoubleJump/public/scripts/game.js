@@ -142,7 +142,7 @@ Game.prototype.print = function () {
         var row_str = "";
         for (var col = 0; col < this.board.cols; ++col) {
             var piece = this.board[row][col] ? this.board[row][col] : ' ';
-            row_str += " " + piece + " ";
+            row_str += "[" + piece + "]";
         }
         console.log(row_str);
     }
@@ -162,14 +162,28 @@ Game.prototype.run_move_list = function(move_list) {
     });
 }
 
+var tests = {
+    move_piece: function() {
+        var game = new Game();
+        game.run_move_list([
+            [[2, 0], [3, 1]]
+        ]);
+        if (game.board[3][1] != 1) {
+            console.error("ERROR, piece unsuccessfully moved\n");
+        }
+        if (game.board[2][0] != 0) {
+            console.error("ERROR, src square was not cleared after move\n");
+        }
+    },
+    run: function() {
+        this.move_piece();
+    },
+};
+
 // To test the game, change the list of moves, or write
 // a function that runs a test and uses an assertion/etc
 function main() {
-    var game = new Game();
-    game.run_move_list([
-        [[0, 0], [1, 1]],
-        [[1, 1], [2, 2]],
-    ]);
+    tests.run();
 }
 
 main();
