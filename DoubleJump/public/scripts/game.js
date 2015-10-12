@@ -22,6 +22,8 @@ var Game = function() {
     this.players = [new Player(1), new Player(2)];
     this.turn = this.players[0].id;
 }
+
+
 // Change turns by changing this.turn to opposite player id
 // var game = new Game();
 // game.next_turn(); // Now game.turn = 2
@@ -35,6 +37,8 @@ Game.prototype.next_turn = function() {
         this.turn = this.players[0].id;
     }
 }
+
+
 // Move the src element's id number to dst, replace dst with 0 (empty)
 // var Game = new Game();
 // // Move top left player 1 piece to diagonal square
@@ -44,6 +48,8 @@ Game.prototype.move_piece = function(src, dst) {
     this.board[dst[0]][dst[1]] = this.board[src[0]][src[1]];
     this.board[src[0]][src[1]] = 0;
 }
+
+
 // Validate src and dst coordinates
 // If invalid, do nothing
 // If valid simple move, move piece, advance turn
@@ -65,18 +71,24 @@ Game.prototype.execute_move = function(src, dst) {
         this.next_turn();
     }
 }
+
+
 // If src and dst constitute a valid move on this.board,
 // then return true
 // else return false
 Game.prototype.valid_simple_move = function(src, dst) {
    return true;
 }
+
+
 // If src and dst constitute a valid hop on this.board,
 // then return true
 // else return false
 Game.prototype.valid_hop = function(src, dst) {
     return true;
 }
+
+
 // Check if src and dst constitute a valid move on this.board
 // of some type, then return this type
 Game.prototype.move_type = function(src, dst) {
@@ -93,6 +105,8 @@ Game.prototype.move_type = function(src, dst) {
         return 0;
     }
 }
+
+
 // Assume input is a function that returns a list of moves,
 // a list of 2-element lists containing 2 2-element arrays
 // i.e., input = [ [[0, 0], [1, 1]], [[1, 1], [2, 2]] ]
@@ -128,6 +142,7 @@ Game.prototype.run = function(input) {
     }
 }
 
+
 // Printing function, for debugging board state.
 Game.prototype.print = function () {
     for (var row = 0; row < this.board.rows; ++row) {
@@ -139,6 +154,7 @@ Game.prototype.print = function () {
         console.log(row_str);
     }
 }
+
 
 // We can use this function to test the game with
 // different lists of moves!
