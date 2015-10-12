@@ -1,11 +1,3 @@
-// Player object type
-// Ex.
-//  var player1 = new Player(1);
-//  console.log("Player 1 id: " + player1.id);
-var Player = function(id) {
-    this.id = id;
-}
-
 // Game object type
 // Ex.
 //  var game = new Game();
@@ -161,29 +153,3 @@ Game.prototype.run_move_list = function(move_list) {
         }
     });
 }
-
-var tests = {
-    move_piece: function() {
-        var game = new Game();
-        game.run_move_list([
-            [[2, 0], [3, 1]]
-        ]);
-        if (game.board[3][1] != 1) {
-            console.error("ERROR, piece unsuccessfully moved\n");
-        }
-        if (game.board[2][0] != 0) {
-            console.error("ERROR, src square was not cleared after move\n");
-        }
-    },
-    run: function() {
-        this.move_piece();
-    },
-};
-
-// To test the game, change the list of moves, or write
-// a function that runs a test and uses an assertion/etc
-function main() {
-    tests.run();
-}
-
-main();
