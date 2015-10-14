@@ -21,6 +21,7 @@ var Game = function() {
     this.board.cols = 8;
     this.players = [new Player(1), new Player(2)];
     this.turn = this.players[0].id;
+    
 }
 
 
@@ -77,6 +78,10 @@ Game.prototype.execute_move = function(src, dst) {
 // then return true
 // else return false
 Game.prototype.valid_simple_move = function(src, dst) {
+    // 4 ifs parsing the piece type. If red do this, if red king do this etc
+    // within if make sure pieces are moving either up or down the board correctly
+    // also make sure they are only moving one square up/down (otherwise it is a jump)
+    // also call check_dest to ensure piece is moving to legal square
    return true;
 }
 
@@ -106,6 +111,16 @@ Game.prototype.move_type = function(src, dst) {
     }
 }
 
+//Helper function to ensure destination square has no piece on it 
+//and it is a legal square for a piece to sit on
+Game.prototype.check_dest = function(src, dst) {
+    return true;
+}
+
+//this helper will come in handy a lot get the color of piece (or no piece) on square. 
+Game.prototype.get_square_color = function(square){
+    return 0;
+}
 
 // Assume input is a function that returns a list of moves,
 // a list of 2-element lists containing 2 2-element arrays
