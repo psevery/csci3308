@@ -21,7 +21,7 @@ var Game = function() {
     this.board.cols = 8;
     this.players = [new Player(1), new Player(2)];
     this.turn = this.players[0].id;
-    
+
 }
 
 
@@ -77,12 +77,27 @@ Game.prototype.execute_move = function(src, dst) {
 // If src and dst constitute a valid move on this.board,
 // then return true
 // else return false
-Game.prototype.valid_simple_move = function(src, dst) {
-    // 4 ifs parsing the piece type. If red do this, if red king do this etc
-    // within if make sure pieces are moving either up or down the board correctly
-    // also make sure they are only moving one square up/down (otherwise it is a jump)
-    // also call check_dest to ensure piece is moving to legal square
-   return true;
+Game.prototype.valid_move = function(src, dst) {
+    //this means it is moving more than one row or collumn, check the validity in jump 
+    if(Math.abs(src[0]-dst[0]) > 1 || Math.abs(src[1]-dst[1]) > 1){
+            return valid_hop(src, dst);
+        }
+    //black normal logic
+    if (this.board.src == 1){
+        //must be moving down screen
+        if (src[0] >= dest[0]){
+            return false;
+        }
+    }
+    //red normal logic
+    if (this.board.src == 2){
+        //must be moving upscreen
+        if(src[0] < dest[0]){
+            return false;
+        }
+    }
+    // if above is true, just have to make sure destination square is ok. 
+   return check_dest(src, dst);
 }
 
 
@@ -97,13 +112,15 @@ Game.prototype.valid_hop = function(src, dst) {
 // Check if src and dst constitute a valid move on this.board
 // of some type, then return this type
 Game.prototype.move_type = function(src, dst) {
-    // Simple move
-    if (this.valid_simple_move(src, dst)) {
+    //this means it is moving more than one row or collumn, check the validity in hop 
+    if(Math.abs(src[0]-dst[0]) > 1 || Math.abs(src[1]-dst[1]) > 1){
+            if(this.valid_hop(src, dst){
+                return 2
+            }
+        }
+    //other wise it is a normal 1X1 move    
+    else if (this.valid_move(src, dst)) {
         return 1;
-    }
-    // Single hop
-    else if (this.valid_hop(src, dst)) {
-        return 2;
     }
     // Invalid move detected
     else {
@@ -113,14 +130,18 @@ Game.prototype.move_type = function(src, dst) {
 
 //Helper function to ensure destination square has no piece on it 
 //and it is a legal square for a piece to sit on
-Game.prototype.check_dest = function(src, dst) {
-    return true;
+var check_dest = function(src, dst) {
+    //squares where any piece should never ever be
+    if ((dst[0]%2==0 && dst[1]%2!=0) || (dst[0]%2!=0 && dst[1]%2==0)){
+        return false;
+    }
+    //cant land on another piece
+    if (this.board.src != 0){
+        return false;
+    }
 }
 
-//this helper will come in handy a lot get the color of piece (or no piece) on square. 
-Game.prototype.get_square_color = function(square){
-    return 0;
-}
+
 
 // Assume input is a function that returns a list of moves,
 // a list of 2-element lists containing 2 2-element arrays
