@@ -114,7 +114,7 @@ Game.prototype.valid_hop = function(src, dst) {
 Game.prototype.move_type = function(src, dst) {
     //this means it is moving more than one row or collumn, check the validity in hop 
     if(Math.abs(src[0]-dst[0]) > 1 || Math.abs(src[1]-dst[1]) > 1){
-            if(this.valid_hop(src, dst){
+            if(this.valid_hop(src, dst)){
                 return 2
             }
         }
