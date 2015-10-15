@@ -80,7 +80,7 @@ Game.prototype.execute_move = function(src, dst) {
 Game.prototype.valid_move = function(src, dst) {
     //this means it is moving more than one row or collumn, check the validity in jump 
     if(Math.abs(src[0]-dst[0]) > 1 || Math.abs(src[1]-dst[1]) > 1){
-            return valid_hop(src, dst);
+            return this.valid_hop(src, dst);
         }
     //black normal logic
     if (this.board.src == 1){
@@ -114,8 +114,8 @@ Game.prototype.valid_hop = function(src, dst) {
 Game.prototype.move_type = function(src, dst) {
     //this means it is moving more than one row or collumn, check the validity in hop 
     if(Math.abs(src[0]-dst[0]) > 1 || Math.abs(src[1]-dst[1]) > 1){
-            if(this.valid_hop(src, dst){
-                return 2
+            if(this.valid_hop(src, dst)){
+                return 2;
             }
         }
     //other wise it is a normal 1X1 move    
@@ -135,9 +135,13 @@ var check_dest = function(src, dst) {
     if ((dst[0]%2==0 && dst[1]%2!=0) || (dst[0]%2!=0 && dst[1]%2==0)){
         return false;
     }
+    // TODO this.board.src?
     //cant land on another piece
-    if (this.board.src != 0){
-        return false;
+    //if (this.board.src != 0){
+        //return false;
+    //}
+    else {
+        return true;
     }
 }
 
