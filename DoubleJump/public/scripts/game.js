@@ -62,17 +62,36 @@ Game.prototype.execute_move = function(src, dst) {
     if (move_type == 0) {
         console.log('Invalid move');
     }
-    else if (move_type == 1) {
-        this.move_piece(src, dst);
-        this.next_turn();
-    } else if (move_type == 2) {
-        this.move_piece(src, dst);
-        // TODO: Somehow wait for next move here, and if the player
-        // clicks fast enough, execute another move
-        this.next_turn();
+    else {
+        if (move_type == 1) {
+            this.move_piece(src, dst);
+            this.next_turn();
+        }
+        else if (move_type == 2) {
+            this.move_piece(src, dst);
+            // TODO Peter
+            // Remove piece that got hopped
+            // Somehow wait for next move here, and if the player
+            // clicks fast enough, execute another move
+            this.next_turn();
+        }
+        // Check if piece is at end of board
+        // If true, king that piece
+        // else, nothing
+        if (this.king_me(dst)) {
+            this.king(dst);
+        }
     }
 }
 
+// TODO Andrew
+Game.prototype.king_me = function(dst) {
+    return false;
+}
+
+Game.prototype.king = function(dst) {
+    // Change dst piece id to corresponding king piece id
+}
 
 // If src and dst constitute a valid move on this.board,
 // then return true
@@ -195,6 +214,10 @@ Game.prototype.run = function(input) {
                 // If hop move executed, break, start timer/etc.
                 // If invalid move, continue
                 this.execute_move(move[0], move[1]);
+                if (this.is_end_game()) {
+                    console.log("End game state reached");
+                    return;
+                }
                 console.log('');
                 this.print();
             }
@@ -228,4 +251,20 @@ Game.prototype.run_move_list = function(move_list) {
             return -1;
         }
     });
+}
+
+// TODO Ryan
+// Function that draws the game board and the pieces on it
+// context parameter = Canvas 2d context object to use for drawing
+Game.prototype.draw = function(context) {
+    // Drawing code goes here
+}
+
+// TODO Patrick
+// Check end game state
+// If end game, true
+// Else, return false
+Game.prototype.is_end_game = function() {
+    // Insert end game check here, return true or false
+    return false;
 }
