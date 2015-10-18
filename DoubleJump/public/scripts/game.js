@@ -79,9 +79,9 @@ Game.prototype.execute_move = function(src, dst) {
 // else return false
 Game.prototype.valid_move = function(src, dst) {
     //this means it is moving more than one row or collumn, check the validity in jump 
-    if(Math.abs(src[0]-dst[0]) > 1 || Math.abs(src[1]-dst[1]) > 1){
-            return this.valid_hop(src, dst);
-        }
+    //if(Math.abs(src[0]-dst[0]) > 1 || Math.abs(src[1]-dst[1]) > 1){
+            //return this.valid_hop(src, dst);
+        //}
     //black normal logic
     if (this.board[src[0]][src[1]] == 1){
         //must be moving down screen
@@ -115,7 +115,7 @@ Game.prototype.valid_hop = function(src, dst) {
     if((this.board[src[0]][src[1]] == 2) && (src[0] <= dst[0])){
         return false;
     }
-    // Check to see if the move valid
+    // Check to see if the hop distance is invalid
     if((Math.abs(src[0]-dst[0]) != 2) || (Math.abs(src[1]-dst[1]) != 2)){
         return false;
     }
@@ -134,12 +134,10 @@ Game.prototype.valid_hop = function(src, dst) {
 // Check if src and dst constitute a valid move on this.board
 // of some type, then return this type
 Game.prototype.move_type = function(src, dst) {
-    //this means it is moving more than one row or collumn, check the validity in hop 
-    if(Math.abs(src[0]-dst[0]) > 1 || Math.abs(src[1]-dst[1]) > 1){
-            if(this.valid_hop(src, dst)){
-                return 2;
-            }
-        }
+    // Check to see if valid hop
+    if (this.valid_hop(src, dst)) {
+        return 2;
+    }
     //other wise it is a normal 1X1 move    
     else if (this.valid_move(src, dst)) {
         return 1;
@@ -193,6 +191,9 @@ Game.prototype.run = function(input) {
 
             for (var i = 0; i < moves_length; ++i) {
                 var move = moves[i];
+                // If simple move executed, break from loop
+                // If hop move executed, break, start timer/etc.
+                // If invalid move, continue
                 this.execute_move(move[0], move[1]);
                 console.log('');
                 this.print();
