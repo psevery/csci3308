@@ -42,6 +42,7 @@ var tests = {
         assert(!game.valid_move([2,2], [0,0]));
         assert(!game.valid_move([2,2], [1,1]));
         assert(!game.valid_move([2,2], [1,3]));
+        assert(!game.valid_move([2,2], [2,3]));
     },
 };
 

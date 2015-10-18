@@ -83,21 +83,21 @@ Game.prototype.valid_move = function(src, dst) {
             return this.valid_hop(src, dst);
         }
     //black normal logic
-    if (this.board.src == 1){
+    if (this.board[src[0]][src[1]] == 1){
         //must be moving down screen
-        if (src[0] >= dest[0]){
+        if (src[0] >= dst[0]){
             return false;
         }
     }
     //red normal logic
-    if (this.board.src == 2){
+    if (this.board[src[0]][src[1]] == 2){
         //must be moving upscreen
-        if(src[0] < dest[0]){
+        if(src[0] <= dst[0]){
             return false;
         }
     }
     // if above is true, just have to make sure destination square is ok. 
-   return check_dest(src, dst);
+    return this.check_dest(src, dst);
 }
 
 
@@ -105,7 +105,29 @@ Game.prototype.valid_move = function(src, dst) {
 // then return true
 // else return false
 Game.prototype.valid_hop = function(src, dst) {
-    return true;
+    // Check to see if the direction of move is correct
+
+    // Black Normal Move
+    if((this.board[src[0]][src[1]] == 1) && (src[0] >= dst[0])){
+        return false;
+    }
+    // Red Normal Move
+    if((this.board[src[0]][src[1]] == 2) && (src[0] <= dst[0])){
+        return false;
+    }
+    // Check to see if the move valid
+    if((Math.abs(src[0]-dst[0]) != 2) || (Math.abs(src[1]-dst[1]) != 2)){
+        return false;
+    }
+    // Calculate the middle space between the jump
+    var middlex = src[0] + ((dst[0]-src[0])/2);
+    var middley = src[1] + ((dst[1]-src[1])/2);
+    // Check to see if there is a opponent's piece to hop over
+    if((this.board[middlex][middley] == 0) || (this.board[middlex][middley] == this.board[src[0]][src[1]])){
+        return false;
+    }     
+
+    return this.check_dest(src, dst);
 }
 
 
@@ -128,21 +150,18 @@ Game.prototype.move_type = function(src, dst) {
     }
 }
 
-//Helper function to ensure destination square has no piece on it 
-//and it is a legal square for a piece to sit on
-var check_dest = function(src, dst) {
+// Helper function to ensure destination square has no piece on it 
+// and it is a legal square for a piece to sit on
+Game.prototype.check_dest = function(src, dst) {
     //squares where any piece should never ever be
     if ((dst[0]%2==0 && dst[1]%2!=0) || (dst[0]%2!=0 && dst[1]%2==0)){
         return false;
     }
-    // TODO this.board.src?
-    //cant land on another piece
-    //if (this.board.src != 0){
-        //return false;
-    //}
-    else {
-        return true;
+    // Checks to see if there is a piece at the dst
+    if (this.board[dst[0]][dst[1]] != 0){
+        return false;
     }
+    return true;
 }
 
 
