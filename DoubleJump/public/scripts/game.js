@@ -62,42 +62,61 @@ Game.prototype.execute_move = function(src, dst) {
     if (move_type == 0) {
         console.log('Invalid move');
     }
-    else if (move_type == 1) {
-        this.move_piece(src, dst);
-        this.next_turn();
-    } else if (move_type == 2) {
-        this.move_piece(src, dst);
-        // TODO: Somehow wait for next move here, and if the player
-        // clicks fast enough, execute another move
-        this.next_turn();
+    else {
+        if (move_type == 1) {
+            this.move_piece(src, dst);
+            this.next_turn();
+        }
+        else if (move_type == 2) {
+            this.move_piece(src, dst);
+            // TODO Peter
+            // Remove piece that got hopped
+            // Somehow wait for next move here, and if the player
+            // clicks fast enough, execute another move
+            this.next_turn();
+        }
+        // Check if piece is at end of board
+        // If true, king that piece
+        // else, nothing
+        if (this.king_me(dst)) {
+            this.king(dst);
+        }
     }
 }
 
+// TODO Andrew
+Game.prototype.king_me = function(dst) {
+    return false;
+}
+
+Game.prototype.king = function(dst) {
+    // Change dst piece id to corresponding king piece id
+}
 
 // If src and dst constitute a valid move on this.board,
 // then return true
 // else return false
 Game.prototype.valid_move = function(src, dst) {
     //this means it is moving more than one row or collumn, check the validity in jump 
-    if(Math.abs(src[0]-dst[0]) > 1 || Math.abs(src[1]-dst[1]) > 1){
-            return this.valid_hop(src, dst);
-        }
+    //if(Math.abs(src[0]-dst[0]) > 1 || Math.abs(src[1]-dst[1]) > 1){
+            //return this.valid_hop(src, dst);
+        //}
     //black normal logic
-    if (this.board.src == 1){
+    if (this.board[src[0]][src[1]] == 1){
         //must be moving down screen
-        if (src[0] >= dest[0]){
+        if (src[0] >= dst[0]){
             return false;
         }
     }
     //red normal logic
-    if (this.board.src == 2){
+    if (this.board[src[0]][src[1]] == 2){
         //must be moving upscreen
-        if(src[0] < dest[0]){
+        if(src[0] <= dst[0]){
             return false;
         }
     }
     // if above is true, just have to make sure destination square is ok. 
-   return check_dest(src, dst);
+    return this.check_dest(src, dst);
 }
 
 
@@ -105,19 +124,48 @@ Game.prototype.valid_move = function(src, dst) {
 // then return true
 // else return false
 Game.prototype.valid_hop = function(src, dst) {
-    return true;
+    // Check to see if the direction of move is correct
+
+    // Black Normal Move
+    if((this.board[src[0]][src[1]] == 1) && (src[0] >= dst[0])){
+        return false;
+    }
+    // Red Normal Move
+    if((this.board[src[0]][src[1]] == 2) && (src[0] <= dst[0])){
+        return false;
+    }
+    // Check to see if the hop distance is invalid
+    if((Math.abs(src[0]-dst[0]) != 2) || (Math.abs(src[1]-dst[1]) != 2)){
+        return false;
+    }
+    // Calculate the middle space between the jump
+    var middlex = src[0] + ((dst[0]-src[0])/2);
+    var middley = src[1] + ((dst[1]-src[1])/2);
+    // Check to see if there is a opponent's piece to hop over
+    if((this.board[middlex][middley] == 0) || (this.board[middlex][middley] == this.board[src[0]][src[1]])){
+        return false;
+    }     
+
+    return this.check_dest(src, dst);
 }
 
 
 // Check if src and dst constitute a valid move on this.board
 // of some type, then return this type
 Game.prototype.move_type = function(src, dst) {
+<<<<<<< HEAD
     //this means it is moving more than one row or collumn, check the validity in hop 
     if(Math.abs(src[0]-dst[0]) > 1 || Math.abs(src[1]-dst[1]) > 1){
             if(this.valid_hop(src, dst)){
                 return 2
             }
         }
+=======
+    // Check to see if valid hop
+    if (this.valid_hop(src, dst)) {
+        return 2;
+    }
+>>>>>>> 517edcef6e64777e2028b80db7eb89f992ffe2eb
     //other wise it is a normal 1X1 move    
     else if (this.valid_move(src, dst)) {
         return 1;
@@ -128,21 +176,18 @@ Game.prototype.move_type = function(src, dst) {
     }
 }
 
-//Helper function to ensure destination square has no piece on it 
-//and it is a legal square for a piece to sit on
-var check_dest = function(src, dst) {
+// Helper function to ensure destination square has no piece on it 
+// and it is a legal square for a piece to sit on
+Game.prototype.check_dest = function(src, dst) {
     //squares where any piece should never ever be
     if ((dst[0]%2==0 && dst[1]%2!=0) || (dst[0]%2!=0 && dst[1]%2==0)){
         return false;
     }
-    // TODO this.board.src?
-    //cant land on another piece
-    //if (this.board.src != 0){
-        //return false;
-    //}
-    else {
-        return true;
+    // Checks to see if there is a piece at the dst
+    if (this.board[dst[0]][dst[1]] != 0){
+        return false;
     }
+    return true;
 }
 
 
@@ -174,7 +219,14 @@ Game.prototype.run = function(input) {
 
             for (var i = 0; i < moves_length; ++i) {
                 var move = moves[i];
+                // If simple move executed, break from loop
+                // If hop move executed, break, start timer/etc.
+                // If invalid move, continue
                 this.execute_move(move[0], move[1]);
+                if (this.is_end_game()) {
+                    console.log("End game state reached");
+                    return;
+                }
                 console.log('');
                 this.print();
             }
@@ -208,4 +260,20 @@ Game.prototype.run_move_list = function(move_list) {
             return -1;
         }
     });
+}
+
+// TODO Ryan
+// Function that draws the game board and the pieces on it
+// context parameter = Canvas 2d context object to use for drawing
+Game.prototype.draw = function(context) {
+    // Drawing code goes here
+}
+
+// TODO Patrick
+// Check end game state
+// If end game, true
+// Else, return false
+Game.prototype.is_end_game = function() {
+    // Insert end game check here, return true or false
+    return false;
 }

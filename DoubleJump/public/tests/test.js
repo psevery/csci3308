@@ -42,6 +42,29 @@ var tests = {
         assert(!game.valid_move([2,2], [0,0]));
         assert(!game.valid_move([2,2], [1,1]));
         assert(!game.valid_move([2,2], [1,3]));
+        assert(!game.valid_move([2,2], [2,3]));
+    },
+    hop: function() {
+        var game = new Game();
+        game.board = [
+            [1, 0, 1, 0, 1, 0, 1, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1, 0, 1, 0],
+            [0, 0, 0, 2, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 2, 0, 0, 0, 2, 0, 2],
+            [2, 0, 2, 0, 2, 0, 2, 0],
+            [0, 2, 0, 2, 0, 2, 0, 2],
+        ];
+        game.board.rows = 8;
+        game.board.cols = 8;
+        //game.print();
+
+        assert(game.valid_move([2,2], [4,4]));
+        assert(!game.valid_move([2,2], [3,4]));
+        assert(!game.valid_move([2,2], [4,3]));
+        assert(!game.valid_move([2,2], [3,3]));
+        assert(!game.valid_move([2,2], [5,5]));
     },
 };
 
