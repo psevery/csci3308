@@ -75,23 +75,30 @@ Game.prototype.execute_move = function(src, dst) {
             // clicks fast enough, execute another move
             this.next_turn();
         }
-        // Check if piece is at end of board
-        // If true, king that piece
+        // Check if a normal piece is at end of board
+        // If true, crown that piece
         // else, nothing
         if (this.king_me(dst)) {
-            this.king(dst);
+            console.log('A piece has been crowned! Fight back!');
         }
     }
 }
 
-// TODO Andrew
+// Checks the board to see if the most recent move results in a king piece
+// Returns true if a piece has been crowned, false if not
+// Also replaces the old piece with a king if it is valid
 Game.prototype.king_me = function(dst) {
+    // Checks to see if the piece at the dst is at the end of the board
+    if((dst[0] == 0) || (dst[0] == (this.board.rows-1))){
+        // Checks to see if the piece is not yet a king and replaces with a king if not
+        if((this.board[dst[0]][dst[1]] == 1) || (this.board[dst[0]][dst[1]] == 2)){
+            this.board[dst[0]][dst[1]] += 2;
+            return true;   
+        }
+    }
     return false;
 }
 
-Game.prototype.king = function(dst) {
-    // Change dst piece id to corresponding king piece id
-}
 
 // If src and dst constitute a valid move on this.board,
 // then return true
@@ -237,6 +244,7 @@ Game.prototype.run = function(input) {
 
 // Printing function, for debugging board state.
 Game.prototype.print = function () {
+    console.log('<---Top--->');
     for (var row = 0; row < this.board.rows; ++row) {
         var row_str = "";
         for (var col = 0; col < this.board.cols; ++col) {
@@ -245,6 +253,7 @@ Game.prototype.print = function () {
         }
         console.log(row_str);
     }
+    console.log('<---Bottom--->');
 }
 
 

@@ -66,6 +66,38 @@ var tests = {
         assert(!game.valid_move([2,2], [3,3]));
         assert(!game.valid_move([2,2], [5,5]));
     },
+    king_me: function() {
+        var game = new Game();
+        game.board = [
+            [0, 0, 2, 0, 0, 0, 4, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 4, 0, 0, 0, 2, 0],
+            [0, 0, 0, 1, 0, 3, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0, 3, 0],
+        ];
+        game.board.rows = 8;
+        game.board.cols = 8;
+
+        // King logic
+        assert(game.king_me([0,2]));
+        assert(game.king_me([7,1]));
+        assert(!game.king_me([0,6]));
+        assert(!game.king_me([7,6]));
+        assert(!game.king_me([0,0]));
+        game.print();
+
+        // King move test
+        assert(game.valid_move([2,2], [4,4]));
+        assert(game.valid_move([2,2], [3,1]));
+        assert(game.valid_move([2,2], [1,1]));
+        assert(game.valid_move([3,5], [1,7]));
+        assert(game.valid_move([3,5], [2,4]));
+        assert(!game.valid_move([2,2], [2,3]));
+        assert(!game.valid_move([2,2], [3,2]));
+    },
 };
 
 // Iterates through "tests" dictionary, executes
