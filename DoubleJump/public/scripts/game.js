@@ -160,19 +160,10 @@ Game.prototype.valid_hop = function(src, dst) {
 // Check if src and dst constitute a valid move on this.board
 // of some type, then return this type
 Game.prototype.move_type = function(src, dst) {
-<<<<<<< HEAD
-    //this means it is moving more than one row or collumn, check the validity in hop 
-    if(Math.abs(src[0]-dst[0]) > 1 || Math.abs(src[1]-dst[1]) > 1){
-            if(this.valid_hop(src, dst)){
-                return 2
-            }
-        }
-=======
     // Check to see if valid hop
     if (this.valid_hop(src, dst)) {
         return 2;
     }
->>>>>>> 517edcef6e64777e2028b80db7eb89f992ffe2eb
     //other wise it is a normal 1X1 move    
     else if (this.valid_move(src, dst)) {
         return 1;
@@ -278,11 +269,49 @@ Game.prototype.draw = function(context) {
     // Drawing code goes here
 }
 
-// TODO Patrick
-// Check end game state
-// If end game, true
-// Else, return false
+
 Game.prototype.is_end_game = function() {
-    // Insert end game check here, return true or false
-    return false;
+    // I return true if one type has a count of 0 on the board, yay
+    var count = this.count_pieces()
+    if ((count[0]==0) || count[1]==0)){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
+//helper to count pieces for is_end_game and can be reused for a scoreboard function 
+Game.prototype.count_pieces = funtion(){
+    //keep track of number of red and black pieces
+    var redCount = 0;
+    var blackCount = 0;
+    //loop through board and get type of each square (red, black, or empty), hard coded 8 because efficency ;)
+    for (var row = 0; row < 8; row ++ ){
+        for (var collumn=0; collumn < 8; collumn++){
+            if ((this.board.[row][col] == 1) || (this.board.[row][col] == 3)){
+                blackCount++; 
+            }
+            else if ((this.board.[row][col] == 2) || (this.board.[row][col] == 4)){
+                redCount++; 
+            }
+        }
+    }
+    //make the counts into an array to return. 
+    var redblackCount = [red,back];
+    return redblackCount;
+}
+
+Game.prototype.get_score = function(){
+    piecesLeft = this.count_pieces;
+    redsLeft = piecesLeft[0];
+    blacksLeft = piecesLeft[1];
+    //interact with html here ....
+}
+
+
+
+
+
+
+
+
