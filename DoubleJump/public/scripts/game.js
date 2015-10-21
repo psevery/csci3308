@@ -302,7 +302,7 @@ Game.prototype.count_pieces = funtion(){
 }
 
 Game.prototype.get_score = function(){
-    piecesLeft = this.count_pieces;
+    piecesLeft = this.count_pieces();
     redsLeft = piecesLeft[0];
     blacksLeft = piecesLeft[1];
     //interact with html here ....
