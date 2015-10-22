@@ -33,9 +33,9 @@ function start() {
   
   // Init sprites
   board_img = new Image();
-  board_img.src = "images/checkerboard.jpg";
+  board_img.src = "../images/checkerboard.jpg";
   pieces_img = new Image();
-  pieces_img.src = "images/checker_images.png";
+  pieces_img.src = "../images/checker_images.png";
 
   var board = {
     pieces: INIT_BOARD,

@@ -5,3 +5,7 @@ var socket = io();
 function addMove(board,move) {
   socket.emit('move',move);
 }
+
+function refreshBoard() {
+  socket.emit('refresh','refresh');
+}

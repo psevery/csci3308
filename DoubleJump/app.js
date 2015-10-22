@@ -8,9 +8,7 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-server.listen(3000, function(){
-  console.log('listening on port 3000');
-});
+server.listen(3000,'0.0.0.0'); 
 
 app.use(express.static('public'));
 //app.get('/', function(req,res){
@@ -21,10 +19,16 @@ var board = "1010101001010101101010100000000000000000020202022020202002020202";
 
 io.on('connection',function(socket) {
   console.log('connection');
-  socket.broadcast.emit('board',board);
   socket.on('move', function(move){
     console.log(move);
     addMove(move);
+    io.emit('board',board);
+  });
+  socket.on('getBoard',function(state){
+    io.emit('board',board);
+  });
+  socket.on('refresh',function(refresh){
+    board = "1010101001010101101010100000000000000000020202022020202002020202";
     io.emit('board',board);
   });
 });
