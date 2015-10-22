@@ -73,7 +73,9 @@ Game.prototype.execute_move = function(src, dst) {
             // Remove piece that got hopped
             // Somehow wait for next move here, and if the player
             // clicks fast enough, execute another move
-            this.next_turn();
+            setTimeout(this.next_turn(), 1000);
+            //^quickie
+            
         }
         // Check if a normal piece is at end of board
         // If true, crown that piece
