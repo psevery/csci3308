@@ -1,5 +1,12 @@
 var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
+var board_img;
+var pieces_img;
+
+function loadImages() {
+  board_img.src = "../images/checkerboard.jpg"
+  pieces_img.src = "../images/checker_images.png"
+}
 
 function drawBoard(board) {
   context.clearRect(0,0,canvas.width,canvas.height);
