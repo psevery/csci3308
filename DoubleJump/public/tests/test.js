@@ -98,6 +98,25 @@ var tests = {
         assert(!game.valid_move([2,2], [2,3]));
         assert(!game.valid_move([2,2], [3,2]));
     },
+    double_jump: function() {
+        var game = new Game();
+        game.board = [
+            [1, 0, 1, 0, 1, 0, 1, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1, 0, 1, 0],
+            [0, 0, 0, 2, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 2, 0, 0, 0, 2, 0, 2],
+            [2, 0, 2, 0, 2, 0, 0, 0],
+            [0, 2, 0, 2, 0, 2, 0, 2],
+        ];
+        game.board.rows = 8;
+        game.board.cols = 8;
+        game.run_move_list([
+            [[2,2], [6,6]],
+        ]);
+    },
+
 };
 
 // Iterates through "tests" dictionary, executes
