@@ -275,31 +275,31 @@ Game.prototype.draw = function(context) {
 Game.prototype.is_end_game = function() {
     // I return true if one type has a count of 0 on the board, yay
     var count = this.count_pieces()
-    if ((count[0]==0) || count[1]==0)){
+    if ((count[0]==0) || count[1]==0) {
         return true;
     }
-    else{
+    else {
         return false;
     }
 }
 //helper to count pieces for is_end_game and can be reused for a scoreboard function 
-Game.prototype.count_pieces = funtion(){
+Game.prototype.count_pieces = function() {
     //keep track of number of red and black pieces
     var redCount = 0;
     var blackCount = 0;
     //loop through board and get type of each square (red, black, or empty), hard coded 8 because efficency ;)
     for (var row = 0; row < 8; row ++ ){
-        for (var collumn=0; collumn < 8; collumn++){
-            if ((this.board.[row][col] == 1) || (this.board.[row][col] == 3)){
+        for (var col = 0; col < 8; col++){
+            if ((this.board[row][col] == 1) || (this.board[row][col] == 3)){
                 blackCount++; 
             }
-            else if ((this.board.[row][col] == 2) || (this.board.[row][col] == 4)){
+            else if ((this.board[row][col] == 2) || (this.board[row][col] == 4)){
                 redCount++; 
             }
         }
     }
     //make the counts into an array to return. 
-    var redblackCount = [red,back];
+    var redblackCount = [redCount,blackCount];
     return redblackCount;
 }
 
@@ -309,11 +309,3 @@ Game.prototype.get_score = function(){
     blacksLeft = piecesLeft[1];
     //interact with html here ....
 }
-
-
-
-
-
-
-
-
