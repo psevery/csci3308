@@ -221,6 +221,23 @@ Game.prototype.run = function(input) {
         else if (move) {
             var move_type = this.execute_move(move[0], move[1]);
             if (move_type == 2) {
+                while (true) {
+                    move = input();
+                    if (move == -1) {
+                        break;
+                    }
+                    if (move == 0) {
+                        break;
+                    }
+                    if (move) {
+                        move_type = this.execute_move(move[0], move[1]);
+                        if (move_type != 2) {
+                            break;
+                        } else {
+                            continue;
+                        }
+                    }
+                }
                 console.log("hop executed");
             }
             if (this.is_end_game()) {
