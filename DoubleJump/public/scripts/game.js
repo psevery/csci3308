@@ -73,7 +73,7 @@ Game.prototype.execute_move = function(src, dst) {
             // Remove piece that got hopped
             // Somehow wait for next move here, and if the player
             // clicks fast enough, execute another move
-            setTimeout(this.next_turn(), 1000);
+            //setTimeout(this.next_turn(), 1000);
             //^quickie
             
         }
@@ -84,6 +84,7 @@ Game.prototype.execute_move = function(src, dst) {
             console.log('A piece has been crowned! Fight back!');
         }
     }
+    return move_type;
 }
 
 // Checks the board to see if the most recent move results in a king piece
@@ -210,26 +211,24 @@ Game.prototype.check_dest = function(src, dst) {
 // input from the mouse.
 Game.prototype.run = function(input) {
     while (true) {
-        var moves = input();
-        if (moves == -1) {
-            break;
+        var move = input();
+        if (move == -1) {
+            return;
         }
-        else if (moves) {
-            var moves_length = moves.length;
-
-            for (var i = 0; i < moves_length; ++i) {
-                var move = moves[i];
-                // If simple move executed, break from loop
-                // If hop move executed, break, start timer/etc.
-                // If invalid move, continue
-                this.execute_move(move[0], move[1]);
-                if (this.is_end_game()) {
-                    console.log("End game state reached");
-                    return;
-                }
-                console.log('');
-                this.print();
+        else if (move == 0) {
+            continue;
+        }
+        else if (move) {
+            var move_type = this.execute_move(move[0], move[1]);
+            if (move_type == 2) {
+                console.log("hop executed");
             }
+            if (this.is_end_game()) {
+                console.log("End game state reached");
+                return;
+            }
+            console.log('');
+            this.print();
         }
     }
 }
@@ -253,11 +252,12 @@ Game.prototype.print = function () {
 // We can use this function to test the game with
 // different lists of moves!
 Game.prototype.run_move_list = function(move_list) {
-    var moves_sent = false;
+    var moves_sent = 0;
     this.run(function() {
-        if (!moves_sent) {
-            moves_sent = true;
-            return move_list;
+        if (moves_sent < move_list.length) {
+            var i = moves_sent;
+            moves_sent += 1;
+            return move_list[i];
         } else {
             return -1;
         }

@@ -113,7 +113,8 @@ var tests = {
         game.board.rows = 8;
         game.board.cols = 8;
         game.run_move_list([
-            [[2,2], [6,6]],
+            [[2,2], [4,4]],
+            [[4,4], [6,6]],
         ]);
     },
 
