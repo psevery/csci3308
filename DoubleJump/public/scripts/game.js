@@ -6,22 +6,34 @@
 //  game.board.rows, game.board.cols: return number of rows/cols
 //  game.players: returns array of 2 Player objects
 //  game.turn: id number of current player
-var Game = function() {
-    this.board = [
-        [1, 0, 1, 0, 1, 0, 1, 0],
-        [0, 1, 0, 1, 0, 1, 0, 1],
-        [1, 0, 1, 0, 1, 0, 1, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 2, 0, 2, 0, 2, 0, 2],
-        [2, 0, 2, 0, 2, 0, 2, 0],
-        [0, 2, 0, 2, 0, 2, 0, 2],
-    ];
+var Game = function(canvas, context, board) {
+    if (board)
+        this.board = board;
+    else
+        this.board = [
+            [1, 0, 1, 0, 1, 0, 1, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1, 0, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 2, 0, 2, 0, 2, 0, 2],
+            [2, 0, 2, 0, 2, 0, 2, 0],
+            [0, 2, 0, 2, 0, 2, 0, 2],
+        ];
     this.board.rows = 8;
     this.board.cols = 8;
-    this.players = [new Player(1), new Player(2)];
-    this.turn = this.players[0].id;
 
+    if (canvas)
+        this.canvas = canvas;
+    if (context)
+        this.context = context;
+
+    this.players = [new Player(1), new Player(2)];
+    this.turn    = this.players[0].id;
+
+    this.first_click     = null;
+    this.second_click    = null;
+    this.move_to_execute = null;
 }
 
 
@@ -191,65 +203,77 @@ Game.prototype.check_dest = function(src, dst) {
     return true;
 }
 
+Game.prototype.xy_to_rowcol = function(x, y) {
+    // TODO change this to true values
+    var square_len = canvas.width / 8;
+    var row = Math.trunc(y / square_len);
+    var col = Math.trunc(x / square_len);
+    return [row, col];
+}
 
-
-// Assume input is a function that returns a list of moves,
-// a list of 2-element lists containing 2 2-element arrays
-// i.e., input = [ [[0, 0], [1, 1]], [[1, 1], [2, 2]] ]
-// where input[0] = move1
-// and   input[1] = move2
-// and   move1[0] = move1 src coordinates
-// and   move1[1] = move1 dst coordinates
-// and   the same for move 2's src and dst coordinates
-// input should return a list moves for the game to execute
-// when there is input to be read, otherwise we just continue
-//
-// End Game: if input() returns -1, assume game should end
-// This function might seem overly complicated,
-// but I'm trying to make it so that we can replace
-// input_function with a function that waits for
-// input from the mouse.
-Game.prototype.run = function(input) {
-    while (true) {
-        var move = input();
-        if (move == -1) {
-            return;
+Game.prototype.mouse_handler = function(e) {
+    var x = e.clientX - this.canvas.offsetLeft;
+    var y = e.clientY;
+    var rowcol = this.xy_to_rowcol(x, y);
+    if (rowcol != null) {
+        var row = rowcol[0];
+        var col = rowcol[1];
+        if (this.first_click == null) {
+            this.first_click = [row, col];
         }
-        else if (move == 0) {
-            continue;
+        else if (this.first_click != null && this.second_click == null) {
+            this.second_click = [row, col];
         }
-        else if (move) {
-            var move_type = this.execute_move(move[0], move[1]);
-            if (move_type == 2) {
-                while (true) {
-                    move = input();
-                    if (move == -1) {
-                        break;
-                    }
-                    if (move == 0) {
-                        break;
-                    }
-                    if (move) {
-                        move_type = this.execute_move(move[0], move[1]);
-                        if (move_type != 2) {
-                            break;
-                        } else {
-                            continue;
-                        }
-                    }
-                }
-                console.log("hop executed");
-            }
-            if (this.is_end_game()) {
-                console.log("End game state reached");
-                return;
-            }
-            console.log('');
-            this.print();
+        else {
+            // Do nothing
         }
+    }
+    else {
+        // Do nothing
     }
 }
 
+Game.prototype.process_input = function() {
+    if (this.first_click != null && this.second_click != null) {
+        var tmp = [[this.first_click[0], this.first_click[1]],
+                    [this.second_click[0], this.second_click[1]]];
+        this.first_click = null;
+        this.second_click = null;
+        move_to_execute = tmp;
+    }
+}
+
+Game.prototype.update = function() {
+    if (this.move_to_execute) {
+        this.execute_move(this.move_to_execute[0],
+                          this.move_to_execute[1]);
+        this.move_to_execute = null;
+    }
+    else {
+        // Do nothing
+    }
+}
+
+Game.prototype.render = function() {
+    drawBoard(this.board, this.canvas, this.context);
+}
+
+Game.prototype.run = function() {
+    this.process_input();
+    this.update();
+    this.render();
+    // requestAnimationFrame tells the browser
+    // to end this function and call the 
+    // parameter function (in this case, "this.run")
+    // when the next frame occurs in the browser.
+    // This will result in the run() function looping,
+    // but only executing as fast (or slower) as the
+    // screen refresh rate (usually 60Hz).
+    // .bind(this) is needed to make sure the callback
+    // is still tied to the "Game" this, otherwise it
+    // will make this = window.
+    window.requestAnimationFrame(this.run.bind(this));
+}
 
 // Printing function, for debugging board state.
 Game.prototype.print = function () {
@@ -265,7 +289,6 @@ Game.prototype.print = function () {
     console.log('<---Bottom--->');
 }
 
-
 // We can use this function to test the game with
 // different lists of moves!
 Game.prototype.run_move_list = function(move_list) {
@@ -280,14 +303,6 @@ Game.prototype.run_move_list = function(move_list) {
         }
     });
 }
-
-// TODO Ryan
-// Function that draws the game board and the pieces on it
-// context parameter = Canvas 2d context object to use for drawing
-Game.prototype.draw = function(context) {
-    // Drawing code goes here
-}
-
 
 Game.prototype.is_end_game = function() {
     // I return true if one type has a count of 0 on the board, yay
