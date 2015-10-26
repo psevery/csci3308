@@ -320,3 +320,4 @@ Game.prototype.loop_manual = function(movelist, verbose) {
             this.print();
     }
 }
+
