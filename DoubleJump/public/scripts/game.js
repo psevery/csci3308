@@ -31,8 +31,7 @@ Game.new = function(matrix) {
 Game.prototype.start = function() {
     this.canvas = document.getElementById("canvas");
     this.context = canvas.getContext("2d");
-    document.addEventListener("mousedown",
-                              this.mouse_handler.bind(this), false);
+    document.addEventListener("mousedown", this.mouse_handler.bind(this), false);
     loadImages();
     this.loop();
 }
@@ -123,12 +122,14 @@ Game.prototype.xy_to_rowcol = function(x, y) {
     var square_len = this.canvas.width / BOARD_COLS;
     var row = Math.trunc(y / square_len);
     var col = Math.trunc(x / square_len);
+    console.log("row= " + row + " col = " + col);
     return [row, col];
 }
 
 Game.prototype.mouse_handler = function(e) {
-    var x = e.clientX - this.canvas.offsetLeft;
-    var y = e.clientY;
+    console.log("click");
+    var x = (e.clientX)- this.canvas.offsetLeft;
+    var y = (e.clientY) - this.canvas.offsetTop;
     var rowcol = this.xy_to_rowcol(x, y);
     if (rowcol != null) {
         var row = rowcol[0];
@@ -138,6 +139,7 @@ Game.prototype.mouse_handler = function(e) {
         }
         else if (this.first_click != null && this.second_click == null) {
             this.second_click = [row, col];
+            //this.execute_move(this.first_click,this.second_click);
         }
     }
 }
