@@ -100,7 +100,6 @@ Game.prototype.execute_move = function(move) {
         }
         else if (move_type == 2) {
             this.move_piece(src, dst);
-            //this.board
             // TODO Peter
             // Remove piece that got hopped
             // Somehow wait for next move here, and if the player
