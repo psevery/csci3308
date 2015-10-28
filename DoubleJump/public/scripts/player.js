@@ -5,3 +5,7 @@
 var Player = function(id) {
     this.id = id;
 }
+
+Player.new = function(id) {
+    return new Player(id);
+}
