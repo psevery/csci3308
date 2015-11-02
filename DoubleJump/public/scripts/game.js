@@ -31,7 +31,7 @@ Game.new = function(matrix) {
 // Everything in the game starts from here
 Game.prototype.start = function() {
     this.canvas = document.getElementById("canvas");
-    this.board = document.getElementById("score");
+    //this.board = document.getElementById("score");
     this.context = canvas.getContext("2d");
     document.addEventListener("mousedown", this.mouse_handler.bind(this), false);
     loadImages();
@@ -42,7 +42,7 @@ Game.prototype.loop = function() {
     this.process_input();
     this.update();
     this.render();
-    this.scoreboard(); 
+    //this.scoreboard(); 
     // requestAnimationFrame tells the browser
     // to end this function and call the 
     // parameter function (in this case, "this.run")
