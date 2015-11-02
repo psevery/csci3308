@@ -24,6 +24,7 @@ var Game = function(board, canvas, context,
 Game.new = function(matrix) {
     var board = Board.new(matrix);
     var players = [Player.new(1), Player.new(2)];
+    // Black moves first
     var turn = 1;
     return new Game(board, null, null, players, turn, null, null, null);
 }
@@ -31,7 +32,7 @@ Game.new = function(matrix) {
 // Everything in the game starts from here
 Game.prototype.start = function() {
     this.canvas = document.getElementById("canvas");
-    this.board = document.getElementById("score");
+    //this.board = document.getElementById("score");
     this.context = canvas.getContext("2d");
     document.addEventListener("mousedown", this.mouse_handler.bind(this), false);
     loadImages();
@@ -40,9 +41,9 @@ Game.prototype.start = function() {
 
 Game.prototype.loop = function() {
     this.process_input();
-    this.update();
+    var not_end_game = this.update();
     this.render();
-    this.scoreboard(); 
+    //this.scoreboard(); 
     // requestAnimationFrame tells the browser
     // to end this function and call the 
     // parameter function (in this case, "this.run")
@@ -53,7 +54,8 @@ Game.prototype.loop = function() {
     // .bind(this) is needed to make sure the callback
     // is still tied to the "Game" this, otherwise it
     // will make this = window.
-    window.requestAnimationFrame(this.loop.bind(this));
+    if (not_end_game)
+        window.requestAnimationFrame(this.loop.bind(this));
 }
 
 Game.prototype.process_input = function() {
@@ -75,6 +77,14 @@ Game.prototype.update = function() {
         this.execute_move(this.move_to_execute);
         this.move_to_execute = null;
     }
+    if (this.is_end_game()) {
+        // TODO Say which player won
+        console.log("End game achieved\n");
+        // Don't continue game loop
+        return false;
+    }
+    // Continue game loop
+    return true;
 }
 
 Game.prototype.render = function() {
@@ -96,14 +106,20 @@ Game.prototype.execute_move = function(move) {
         //console.log('Invalid move');
     }
     else {
+        // Simple move
         if (move_type == 1) {
             this.move_piece(src, dst);
             this.next_turn();
         }
+        // Hop move
         else if (move_type == 2) {
             this.move_piece(src, dst);
-            // TODO Peter
             // Remove piece that got hopped
+            this.remove_piece(src, dst);
+            this.next_turn();
+            // TODO
+            // Peter adds double jump checking/functionality
+
             // Somehow wait for next move here, and if the player
             // clicks fast enough, execute another move
             //setTimeout(this.next_turn(), 1000);
@@ -151,7 +167,10 @@ Game.prototype.mouse_handler = function(e) {
 // then return true
 // else return false
 Game.prototype.valid_move = function(src, dst) {
-    //this means it is moving more than one row or collumn, check the validity in jump 
+    //this means it is moving more than one row or collumn
+    if((Math.abs(src[0]-dst[0]) != 1) || (Math.abs(src[1]-dst[1]) != 1)){
+        return false;
+    }
     //black normal logic
     if (this.board.matrix[src[0]][src[1]] == 1){
         //must be moving down screen
@@ -166,7 +185,7 @@ Game.prototype.valid_move = function(src, dst) {
             return false;
         }
     }
-    // if above is true, just have to make sure destination square is ok. 
+    // Passed above test, just have to make sure destination square is ok. 
     return this.check_dest(src, dst);
 }
 
@@ -204,6 +223,18 @@ Game.prototype.valid_hop = function(src, dst) {
 // Check if src and dst constitute a valid move on this.board
 // of some type, then return this type
 Game.prototype.move_type = function(src, dst) {
+    if (this.turn == 1) {
+        if (this.board.matrix[src[0]][src[1]] != 1 &&
+            this.board.matrix[src[0]][src[1]] != 3) {
+            return 0;
+        }
+    }
+    if (this.turn == 2) {
+        if (this.board.matrix[src[0]][src[1]] != 2 &&
+            this.board.matrix[src[0]][src[1]] != 4) {
+            return 0;
+        }
+    }
     // Check to see if valid hop
     if (this.valid_hop(src, dst)) {
         return 2;
@@ -278,23 +309,35 @@ Game.prototype.get_score = function(){
 // game.next_turn(); // Now game.turn = 2
 Game.prototype.next_turn = function() {
     // If current player is player 1, turn = player2.id
-    if (this.turn == this.players[0].id) {
-        this.turn = this.players[1].id;
+    if (this.turn == 1) {
+        this.turn = 2;
     }
     // Else, current player is player 2, turn = player1.id
     else {
-        this.turn = this.players[0].id;
+        this.turn = 1;
     }
 }
 
 // Move the src element's id number to dst, replace dst with 0 (empty)
 // var Game = new Game();
-// // Move top left player 1 piece to diagonal square
+// Move top left player 1 piece to diagonal square
 // src and dst are both 2-element arrays
 // game.move_piece([0, 0], [1, 1]);
 Game.prototype.move_piece = function(src, dst) {
     this.board.matrix[dst[0]][dst[1]] = this.board.matrix[src[0]][src[1]];
     this.board.matrix[src[0]][src[1]] = 0;
+}
+
+// Takes the src and dst to calculate the piece hopped over.
+// If there is an opposing piece there, proceeds to remove the piece
+// from the board.
+// Note: Do not call without checking for a valid hop.
+Game.prototype.remove_piece = function(src, dst) {
+    // Calculate the coordinates of the middle space between the hop.
+    var middlex = src[0] + ((dst[0]-src[0])/2);
+    var middley = src[1] + ((dst[1]-src[1])/2); 
+    // Removes the middle piece.
+    this.board.matrix[middlex][middley] = 0;
 }
 
 // Checks the board to see if the most recent move results in a king piece
