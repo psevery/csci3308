@@ -320,9 +320,9 @@ Game.prototype.get_score = function(){
     if (redsLeft == 0){
             document.getElementById("gameover").innerHTML = "BLACK WINS!";
     }
-    //if (blacksLeft == 0){
+    if (blacksLeft == 0){
             document.getElementById("gameover").innerHTML = "RED WINS!";
-    //}
+    }
 
 
 }
