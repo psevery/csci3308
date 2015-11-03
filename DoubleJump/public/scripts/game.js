@@ -155,7 +155,31 @@ Game.prototype.mouse_handler = function(e) {
         var row = rowcol[0];
         var col = rowcol[1];
         if (this.first_click == null) {
-            this.first_click = [row, col];
+            // Also make sure the player actually clicked a piece
+            // they own, otherwise it is frustrating to wait for 
+            // second click to be made! TODO: Consider splitting
+            // move validation into first-click and second-click
+            // phases. Then, we can apply first-click validation
+            // here, and second-click validation on second click
+            // or during move execution.
+            var piece = this.board.matrix[row][col];
+            // Square is not empty
+            if (piece != 0) {
+                // Check that piece is owned by player
+                if (this.turn == 1) {
+                    if (piece == 1 || piece == 3) {
+                        this.first_click = [row, col];
+                    }
+                // This condition can be removed once
+                // we know for sure that this.turn is only
+                // equal to 1 or 2. Until then, it is helpful
+                // to keep this for debugging purposes
+                } else if (this.turn == 2) {
+                    if (piece == 2 || piece == 4) {
+                        this.first_click = [row, col];
+                    }
+                }
+            }
         }
         else if (this.first_click != null && this.second_click == null) {
             this.second_click = [row, col];
