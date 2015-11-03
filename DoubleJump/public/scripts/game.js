@@ -303,13 +303,10 @@ Game.prototype.get_score = function(){
     piecesLeft = this.count_pieces();
     redsLeft = piecesLeft[0];
     blacksLeft = piecesLeft[1];
-    redActive = "<ins><b> RED </b></ins>"
-    redInactive = "RED"
-    blackActive = "<ins><b> BLACK </b></ins>"
-    blackInactive = "BLACK"
-    //interact with html here ....
-    //this.score = "red: " + redsLeft + " black: " + blacksLeft;
-    //document.getElementById("score").innerHTML = this.score;
+    redActive = "<ins><b> RED </b></ins> &oplus;";
+    redInactive = "RED";
+    blackActive = "<ins><b> BLACK </b></ins> &oplus;"; 
+    blackInactive = "BLACK";
     if (this.turn == 2){ 
         document.getElementById("redname").innerHTML = redActive;
         document.getElementById("blackname").innerHTML = blackInactive;
@@ -320,6 +317,12 @@ Game.prototype.get_score = function(){
     }
     document.getElementById("blackscore").innerHTML = blacksLeft;
     document.getElementById("redscore").innerHTML = redsLeft;
+    if (redsLeft == 0){
+            document.getElementById("gameover").innerHTML = "BLACK WINS!";
+    }
+    //if (blacksLeft == 0){
+            document.getElementById("gameover").innerHTML = "RED WINS!";
+    //}
 
 
 }
