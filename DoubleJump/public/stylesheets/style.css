@@ -2,7 +2,9 @@ h1 {
 	padding: 25px;
 	text-align: center;
 }
-
+table, td {
+    border: 1px solid black;
+}
 canvas {
     padding-left: 0;
     padding-right: 0;

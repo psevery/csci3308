@@ -89,6 +89,7 @@ Game.prototype.update = function() {
 
 Game.prototype.render = function() {
     drawBoard(this.board, this.canvas, this.context);
+    this.get_score();
 }
 
 // Validate src and dst coordinates
@@ -146,10 +147,13 @@ Game.prototype.xy_to_rowcol = function(x, y) {
 }
 
 Game.prototype.mouse_handler = function(e) {
-    console.log("click");
     var x = (e.clientX)- this.canvas.offsetLeft;
     var y = (e.clientY) - this.canvas.offsetTop;
     var rowcol = this.xy_to_rowcol(x, y);
+    //to
+    if (rowcol[0] > 7 || rowcol[1] > 7){
+        return;
+    }
     if (rowcol != null) {
         var row = rowcol[0];
         var col = rowcol[1];
@@ -215,7 +219,6 @@ Game.prototype.valid_hop = function(src, dst) {
     if((this.board.matrix[middlex][middley] == 0) || (this.board.matrix[middlex][middley] == this.board.matrix[src[0]][src[1]])){
         return false;
     }     
-
     return this.check_dest(src, dst);
 }
 
@@ -300,8 +303,28 @@ Game.prototype.get_score = function(){
     piecesLeft = this.count_pieces();
     redsLeft = piecesLeft[0];
     blacksLeft = piecesLeft[1];
-    //interact with html here ....
-    this.score.innerhtml = "red: " + redsLeft + " black: " + blacksLeft;
+    redActive = "<ins><b> RED </b></ins> &oplus;";
+    redInactive = "RED";
+    blackActive = "<ins><b> BLACK </b></ins> &oplus;"; 
+    blackInactive = "BLACK";
+    if (this.turn == 2){ 
+        document.getElementById("redname").innerHTML = redActive;
+        document.getElementById("blackname").innerHTML = blackInactive;
+    }
+    else{
+        document.getElementById("redname").innerHTML = redInactive;
+        document.getElementById("blackname").innerHTML = blackActive;
+    }
+    document.getElementById("blackscore").innerHTML = blacksLeft;
+    document.getElementById("redscore").innerHTML = redsLeft;
+    if (redsLeft == 0){
+            document.getElementById("gameover").innerHTML = "BLACK WINS!";
+    }
+    if (blacksLeft == 0){
+            document.getElementById("gameover").innerHTML = "RED WINS!";
+    }
+
+
 }
 
 // Change turns by changing this.turn to opposite player id
