@@ -6,14 +6,11 @@
 //  game.board.rows, game.board.cols: return number of rows/cols
 //  game.players: returns array of 2 Player objects
 //  game.turn: id number of current player
-var Game = function(board, canvas, context,
-                    players, turn, first_click,
+var Game = function(board, players, turn, first_click,
                     second_click, move_to_execute)
 {
     this.board = board;
     this.score = score;
-    this.canvas = canvas;
-    this.context = context;
     this.players = players;
     this.turn = turn;
     this.first_click = first_click;
@@ -26,14 +23,14 @@ Game.new = function(matrix) {
     var players = [Player.new(1), Player.new(2)];
     // Black moves first
     var turn = 1;
-    return new Game(board, null, null, players, turn, null, null, null);
+    return new Game(board, players, turn, null, null, null);
 }
 
 // Everything in the game starts from here
 Game.prototype.start = function() {
-    this.canvas = document.getElementById("canvas");
+    canvas = document.getElementById("canvas");
     //this.board = document.getElementById("score");
-    this.context = canvas.getContext("2d");
+    context = canvas.getContext("2d");
     document.addEventListener("mousedown", this.mouse_handler.bind(this), false);
     loadImages();
     this.loop();
@@ -88,7 +85,7 @@ Game.prototype.update = function() {
 }
 
 Game.prototype.render = function() {
-    drawBoard(this.board, this.canvas, this.context);
+    drawBoard(this.board, canvas, context);
     this.get_score();
 }
 
@@ -139,7 +136,7 @@ Game.prototype.execute_move = function(move) {
 
 Game.prototype.xy_to_rowcol = function(x, y) {
     // TODO change this to true values
-    var square_len = this.canvas.width / BOARD_COLS;
+    var square_len = canvas.width / BOARD_COLS;
     var row = Math.trunc(y / square_len);
     var col = Math.trunc(x / square_len);
     console.log("row= " + row + " col = " + col);
@@ -147,8 +144,8 @@ Game.prototype.xy_to_rowcol = function(x, y) {
 }
 
 Game.prototype.mouse_handler = function(e) {
-    var x = (e.clientX)- this.canvas.offsetLeft;
-    var y = (e.clientY) - this.canvas.offsetTop;
+    var x = (e.clientX)- canvas.offsetLeft;
+    var y = (e.clientY) - canvas.offsetTop;
     var rowcol = this.xy_to_rowcol(x, y);
     //to
     if (rowcol[0] > 7 || rowcol[1] > 7){
