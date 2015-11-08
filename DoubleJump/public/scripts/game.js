@@ -77,7 +77,9 @@ Game.prototype.update = function() {
         if ((now - this.last_double_jump[1]) > 1000) {
             // If the person has clicked the piece they hopped, don't go to next turn
             var last_hop = this.last_double_jump[0];
-            if (this.first_click == null || this.first_click[0] != last_hop[0] || this.first_click[1] != last_hop[1]) {
+            //console.log("last_hop: " + last_hop);
+            //console.log("first_click: " + this.first_click);
+            if (!this.move_to_execute && (this.first_click == null || this.first_click[0] != last_hop[0] || this.first_click[1] != last_hop[1])) {
                 console.log("Too much time before next hop, next turn");
                 this.next_turn();
                 this.last_double_jump = null;
