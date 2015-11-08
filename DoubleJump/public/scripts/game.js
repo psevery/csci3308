@@ -7,7 +7,7 @@
 //  game.players: returns array of 2 Player objects
 //  game.turn: id number of current player
 var Game = function(board, players, turn, first_click,
-                    second_click, move_to_execute)
+                    second_click, move_to_execute, last_double_jump)
 {
     this.board = board;
     this.score = score;
@@ -16,6 +16,7 @@ var Game = function(board, players, turn, first_click,
     this.first_click = first_click;
     this.second_click = second_click;
     this.move_to_execute = move_to_execute;
+    this.last_double_jump = last_double_jump;
 }
 
 Game.new = function(matrix) {
@@ -23,7 +24,7 @@ Game.new = function(matrix) {
     var players = [Player.new(1), Player.new(2)];
     // Black moves first
     var turn = 1;
-    return new Game(board, players, turn, null, null, null);
+    return new Game(board, players, turn, null, null, null, null);
 }
 
 // Everything in the game starts from here
@@ -70,6 +71,19 @@ Game.prototype.process_input = function() {
 }
 
 Game.prototype.update = function() {
+    if (this.last_double_jump != null) {
+        var date = new Date();
+        var now = date.getTime();
+        if ((now - this.last_double_jump[1]) > 1000) {
+            // If the person has clicked the piece they hopped, don't go to next turn
+            var last_hop = this.last_double_jump[0];
+            if (this.first_click == null || this.first_click[0] != last_hop[0] || this.first_click[1] != last_hop[1]) {
+                console.log("Too much time before next hop, next turn");
+                this.next_turn();
+                this.last_double_jump = null;
+            }
+        }
+    }
     if (this.move_to_execute) {
         this.execute_move(this.move_to_execute);
         this.move_to_execute = null;
@@ -101,6 +115,12 @@ Game.prototype.execute_move = function(move) {
 
     var move_type = this.move_type(src, dst);
     if (move_type == 0) {
+        // previously, a double jump was executed, but the
+        // next move was invalid, so advance turn, and set last_double to null
+        if (this.last_double_jump != null) {
+            this.last_double_jump = null;
+            this.next_turn();
+        }
         //console.log('Invalid move');
     }
     else {
@@ -111,18 +131,17 @@ Game.prototype.execute_move = function(move) {
         }
         // Hop move
         else if (move_type == 2) {
-            this.move_piece(src, dst);
-            // Remove piece that got hopped
-            this.remove_piece(src, dst);
-            this.next_turn();
-            // TODO
-            // Peter adds double jump checking/functionality
-
-            // Somehow wait for next move here, and if the player
-            // clicks fast enough, execute another move
-            //setTimeout(this.next_turn(), 1000);
-            //^quickie
-            
+            //if (this.last_double_jump == null) {
+                this.execute_hop(src, dst);
+                // Now the player's piece is on the dst square
+                var date = new Date();
+                this.last_double_jump = [dst, date.getTime()];
+            //}
+            //else {
+            //}
+            //this.next_turn();
+            //window.setTimeout(this.double_jump.bind(this), 1000);
+            //this.next_turn();
         }
         // Check if a normal piece is at end of board
         // If true, crown that piece
@@ -220,6 +239,14 @@ Game.prototype.valid_move = function(src, dst) {
 // else return false
 Game.prototype.valid_hop = function(src, dst) {
     // Check to see if the direction of move is correct
+    // If a double jump is being execute, then the src has to be the dst of the
+    // last double jump
+    if (this.last_double_jump != null) {
+        if (this.last_double_jump[0][0] != src[0] || this.last_double_jump[0][1] != src[1]) {
+            console.log("double jump must be same piece");
+            return false;
+        }
+    }
 
     // Black Normal Move
     if((this.board.matrix[src[0]][src[1]] == 1) && (src[0] >= dst[0])){
@@ -413,3 +440,22 @@ Game.prototype.loop_manual = function(movelist, verbose) {
     }
 }
 
+Game.prototype.execute_hop = function(src, dst) {
+    // Move piece that's hopping to its final destination square
+    this.move_piece(src, dst);
+    // Remove piece that got hopped
+    this.remove_piece(src, dst);
+}
+
+function squares_equal(a, b) {
+    return a[0] == b[0] && a[1] == b[1];
+}
+
+Game.prototype.double_jump = function(src) {
+    if (this.move_to_execute) {
+        if (squares_equal(src, this.move_to_execute[0])) {
+            this.execute_hop
+            this.move_to_execute = null;
+        }
+    }
+}
