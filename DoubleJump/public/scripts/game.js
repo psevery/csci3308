@@ -29,9 +29,7 @@ Game.new = function(matrix) {
 
 // Everything in the game starts from here
 Game.prototype.start = function() {
-    canvas = document.getElementById("canvas");
     //this.board = document.getElementById("score");
-    context = canvas.getContext("2d");
     document.addEventListener("mousedown", this.mouse_handler.bind(this), false);
     loadImages();
     this.loop();

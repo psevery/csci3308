@@ -1,7 +1,7 @@
 var board_img = new Image();
 var pieces_img = new Image();
-var canvas;
-var context;
+var canvas = document.getElementById("canvas");
+var context = canvas.getContext("2d");
 
 function loadImages() {
   board_img.src = "../images/checkerboard.jpg"
