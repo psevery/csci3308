@@ -132,27 +132,35 @@ var tests = {
         assert(!game.valid_move([2,2], [2,3]));
         assert(!game.valid_move([2,2], [3,2]));
     },
+    */
     double_jump: function() {
-        var game = new Game();
-        game.board = [
+        var final = run_test_game([
+            [[2,4],[4,6]],
+            [[4,6],[6,4]],
+        ],
+        // Init board has a double jump setup for player 1
+        [
             [1, 0, 1, 0, 1, 0, 1, 0],
             [0, 1, 0, 1, 0, 1, 0, 1],
             [1, 0, 1, 0, 1, 0, 1, 0],
-            [0, 0, 0, 2, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 2, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 2, 0, 0, 0, 2, 0, 2],
-            [2, 0, 2, 0, 2, 0, 0, 0],
             [0, 2, 0, 2, 0, 2, 0, 2],
-        ];
-        game.board.rows = 8;
-        game.board.cols = 8;
-        game.run_move_list([
-            [[2,2], [4,4]],
-            [[4,4], [6,6]],
+            [2, 0, 2, 0, 0, 0, 2, 0],
+            [0, 2, 0, 2, 0, 2, 0, 2],
         ]);
+        assert("double_jump:\nplayer1: double jump move, [2,4] to [4,6], then [4,6] to [6,4]",
+               final.board.equals(Board.new([
+            [1, 0, 1, 0, 1, 0, 1, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 0, 0, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 2, 0, 2, 0, 0, 0, 2],
+            [2, 0, 2, 0, 1, 0, 2, 0],
+            [0, 2, 0, 2, 0, 2, 0, 2],
+        ])));
     },
-    */
-
 };
 
 // Iterates through "tests" dictionary, executes

@@ -6,19 +6,17 @@
 //  game.board.rows, game.board.cols: return number of rows/cols
 //  game.players: returns array of 2 Player objects
 //  game.turn: id number of current player
-var Game = function(board, canvas, context,
-                    players, turn, first_click,
-                    second_click, move_to_execute)
+var Game = function(board, players, turn, first_click,
+                    second_click, move_to_execute, last_double_jump)
 {
     this.board = board;
     this.score = score;
-    this.canvas = canvas;
-    this.context = context;
     this.players = players;
     this.turn = turn;
     this.first_click = first_click;
     this.second_click = second_click;
     this.move_to_execute = move_to_execute;
+    this.last_double_jump = last_double_jump;
 }
 
 Game.new = function(matrix) {
@@ -26,14 +24,14 @@ Game.new = function(matrix) {
     var players = [Player.new(1), Player.new(2)];
     // Black moves first
     var turn = 1;
-    return new Game(board, null, null, players, turn, null, null, null);
+    return new Game(board, players, turn, null, null, null, null);
 }
 
 // Everything in the game starts from here
 Game.prototype.start = function() {
-    this.canvas = document.getElementById("canvas");
+    canvas = document.getElementById("canvas");
     //this.board = document.getElementById("score");
-    this.context = canvas.getContext("2d");
+    context = canvas.getContext("2d");
     document.addEventListener("mousedown", this.mouse_handler.bind(this), false);
     loadImages();
     this.loop();
@@ -73,6 +71,21 @@ Game.prototype.process_input = function() {
 }
 
 Game.prototype.update = function() {
+    if (this.last_double_jump != null) {
+        var date = new Date();
+        var now = date.getTime();
+        if ((now - this.last_double_jump[1]) > 1000) {
+            // If the person has clicked the piece they hopped, don't go to next turn
+            var last_hop = this.last_double_jump[0];
+            //console.log("last_hop: " + last_hop);
+            //console.log("first_click: " + this.first_click);
+            if (!this.move_to_execute && (this.first_click == null || this.first_click[0] != last_hop[0] || this.first_click[1] != last_hop[1])) {
+                console.log("Too much time before next hop, next turn");
+                this.next_turn();
+                this.last_double_jump = null;
+            }
+        }
+    }
     if (this.move_to_execute) {
         this.execute_move(this.move_to_execute);
         this.move_to_execute = null;
@@ -88,7 +101,7 @@ Game.prototype.update = function() {
 }
 
 Game.prototype.render = function() {
-    drawBoard(this.board, this.canvas, this.context);
+    drawBoard(this.board, canvas, context);
     this.get_score();
 }
 
@@ -104,6 +117,12 @@ Game.prototype.execute_move = function(move) {
 
     var move_type = this.move_type(src, dst);
     if (move_type == 0) {
+        // previously, a double jump was executed, but the
+        // next move was invalid, so advance turn, and set last_double to null
+        if (this.last_double_jump != null) {
+            this.last_double_jump = null;
+            this.next_turn();
+        }
         //console.log('Invalid move');
     }
     else {
@@ -114,20 +133,17 @@ Game.prototype.execute_move = function(move) {
         }
         // Hop move
         else if (move_type == 2) {
-            this.move_piece(src, dst);
-            // Remove piece that got hopped
-            this.remove_piece(src, dst);
+            //if (this.last_double_jump == null) {
+                this.execute_hop(src, dst);
+                // Now the player's piece is on the dst square
+                var date = new Date();
+                this.last_double_jump = [dst, date.getTime()];
+            //}
+            //else {
+            //}
             //this.next_turn();
-            // TODO
-            // Peter adds double jump checking/functionality
-            if (this.king_me(dst)) {
-                console.log('A piece has been crowned! Fight back!');
-            }
-            // Somehow wait for next move here, and if the player
-            // clicks fast enough, execute another move
-            //setTimeout(this.next_turn, 0);
-            //^quickie
-            this.next_turn();
+            //window.setTimeout(this.double_jump.bind(this), 1000);
+            //this.next_turn();
         }
         // Check if a normal piece is at end of board
         // If true, crown that piece
@@ -141,7 +157,7 @@ Game.prototype.execute_move = function(move) {
 
 Game.prototype.xy_to_rowcol = function(x, y) {
     // TODO change this to true values
-    var square_len = this.canvas.width / BOARD_COLS;
+    var square_len = canvas.width / BOARD_COLS;
     var row = Math.trunc(y / square_len);
     var col = Math.trunc(x / square_len);
     console.log("row= " + row + " col = " + col);
@@ -149,8 +165,8 @@ Game.prototype.xy_to_rowcol = function(x, y) {
 }
 
 Game.prototype.mouse_handler = function(e) {
-    var x = (e.clientX)- this.canvas.offsetLeft;
-    var y = (e.clientY) - this.canvas.offsetTop;
+    var x = (e.clientX)- canvas.offsetLeft;
+    var y = (e.clientY) - canvas.offsetTop;
     var rowcol = this.xy_to_rowcol(x, y);
     //to
     if (rowcol[0] > 7 || rowcol[1] > 7){
@@ -160,7 +176,31 @@ Game.prototype.mouse_handler = function(e) {
         var row = rowcol[0];
         var col = rowcol[1];
         if (this.first_click == null) {
-            this.first_click = [row, col];
+            // Also make sure the player actually clicked a piece
+            // they own, otherwise it is frustrating to wait for 
+            // second click to be made! TODO: Consider splitting
+            // move validation into first-click and second-click
+            // phases. Then, we can apply first-click validation
+            // here, and second-click validation on second click
+            // or during move execution.
+            var piece = this.board.matrix[row][col];
+            // Square is not empty
+            if (piece != 0) {
+                // Check that piece is owned by player
+                if (this.turn == 1) {
+                    if (piece == 1 || piece == 3) {
+                        this.first_click = [row, col];
+                    }
+                // This condition can be removed once
+                // we know for sure that this.turn is only
+                // equal to 1 or 2. Until then, it is helpful
+                // to keep this for debugging purposes
+                } else if (this.turn == 2) {
+                    if (piece == 2 || piece == 4) {
+                        this.first_click = [row, col];
+                    }
+                }
+            }
         }
         else if (this.first_click != null && this.second_click == null) {
             this.second_click = [row, col];
@@ -201,6 +241,14 @@ Game.prototype.valid_move = function(src, dst) {
 // else return false
 Game.prototype.valid_hop = function(src, dst) {
     // Check to see if the direction of move is correct
+    // If a double jump is being execute, then the src has to be the dst of the
+    // last double jump
+    if (this.last_double_jump != null) {
+        if (this.last_double_jump[0][0] != src[0] || this.last_double_jump[0][1] != src[1]) {
+            console.log("double jump must be same piece");
+            return false;
+        }
+    }
 
     // Black Normal Move
     if((this.board.matrix[src[0]][src[1]] == 1) && (src[0] >= dst[0])){
@@ -398,3 +446,22 @@ Game.prototype.loop_manual = function(movelist, verbose) {
     }
 }
 
+Game.prototype.execute_hop = function(src, dst) {
+    // Move piece that's hopping to its final destination square
+    this.move_piece(src, dst);
+    // Remove piece that got hopped
+    this.remove_piece(src, dst);
+}
+
+function squares_equal(a, b) {
+    return a[0] == b[0] && a[1] == b[1];
+}
+
+Game.prototype.double_jump = function(src) {
+    if (this.move_to_execute) {
+        if (squares_equal(src, this.move_to_execute[0])) {
+            this.execute_hop
+            this.move_to_execute = null;
+        }
+    }
+}

@@ -1,5 +1,7 @@
 var board_img = new Image();
 var pieces_img = new Image();
+var canvas;
+var context;
 
 function loadImages() {
   board_img.src = "../images/checkerboard.jpg"
