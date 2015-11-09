@@ -1,14 +1,14 @@
-var board_img = new Image();
-var pieces_img = new Image();
+var board_img;
+var pieces_img;
 var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
 
 function loadImages() {
-  board_img.src = "../images/checkerboard.jpg"
-  pieces_img.src = "../images/checker_images.png"
+  board_img.src = "../images/checkerboard.jpg";
+  pieces_img.src = "../images/checker_images.png";
 }
 
-function drawBoard(board, canvas, context) {
+function drawBoard(board) {
   context.clearRect(0,0,canvas.width,canvas.height);
   // The board is scalable based on the width and height of the canvas
   //context.drawImage(board_img, 0, 0, 588, 590, canvas.width/588*20, canvas.height/590*20, canvas.width, canvas.height);
