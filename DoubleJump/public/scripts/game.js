@@ -99,7 +99,7 @@ Game.prototype.update = function() {
 }
 
 Game.prototype.render = function() {
-    drawBoard(this.board, canvas, context);
+    drawBoard(this.board);
     this.get_score();
 }
 
