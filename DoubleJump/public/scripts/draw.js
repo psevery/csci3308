@@ -1,7 +1,12 @@
 var board_img;
 var pieces_img;
-var canvas = document.getElementById("canvas");
-var context = canvas.getContext("2d");
+var canvas;
+var context;
+
+function loadCanvas() {
+  var canvas = document.getElementById("canvas");
+  var context = canvas.getContext("2d");
+}
 
 function loadImages() {
   board_img.src = "../images/checkerboard.jpg";
