@@ -117,15 +117,17 @@ Game.prototype.execute_move = function(move) {
             this.move_piece(src, dst);
             // Remove piece that got hopped
             this.remove_piece(src, dst);
-            this.next_turn();
+            //this.next_turn();
             // TODO
             // Peter adds double jump checking/functionality
-
+            if (this.king_me(dst)) {
+                console.log('A piece has been crowned! Fight back!');
+            }
             // Somehow wait for next move here, and if the player
             // clicks fast enough, execute another move
-            //setTimeout(this.next_turn(), 1000);
+            //setTimeout(this.next_turn, 0);
             //^quickie
-            
+            this.next_turn();
         }
         // Check if a normal piece is at end of board
         // If true, crown that piece
@@ -339,6 +341,10 @@ Game.prototype.next_turn = function() {
     else {
         this.turn = 1;
     }
+}
+Game.prototype.set_turn = function(player) {
+    // If current player is player 1, turn = player2.id
+    this.turn == player;
 }
 
 // Move the src element's id number to dst, replace dst with 0 (empty)
