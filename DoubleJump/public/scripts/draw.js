@@ -3,12 +3,17 @@ var pieces_img = new Image();
 var canvas;
 var context;
 
-function loadImages() {
-  board_img.src = "../images/checkerboard.jpg"
-  pieces_img.src = "../images/checker_images.png"
+function loadCanvas() {
+  canvas = document.getElementById("canvas");
+  context = canvas.getContext("2d");
 }
 
-function drawBoard(board, canvas, context) {
+function loadImages() {
+  board_img.src = "../images/checkerboard.jpg";
+  pieces_img.src = "../images/checker_images.png";
+}
+
+function drawBoard(board) {
   context.clearRect(0,0,canvas.width,canvas.height);
   // The board is scalable based on the width and height of the canvas
   //context.drawImage(board_img, 0, 0, 588, 590, canvas.width/588*20, canvas.height/590*20, canvas.width, canvas.height);
