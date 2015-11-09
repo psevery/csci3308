@@ -12,5 +12,77 @@ canvas {
     margin-right: auto;
     display: block;
 }
+#outer
+{
+    width:100%;
+    text-align: center;
+}
+.inner
+{
+    display: inline-block;
+}
+.round-button {
+	width:80%;
+}
+.round-button-red {
+	width: 100%;
+	height:0;
+	padding-bottom: 100%;
+    border-radius: 50%;
+	border:4px solid #990000;
+    overflow:hidden;
+    
+    background: #CC0000; 
+    box-shadow: 0 0 3px gray;
+}
+.round-button-red:hover {
+	background:#FF0000;
+}
+.round-button a {
+    display:block;
+	float:left;
+	width:100%;
+	padding-top:50%;
+    padding-bottom:50%;
+	line-height:1em;
+	margin-top:-1em;
+	text-align:center;
+	color:#e2eaf3;
+    font-family:Verdana;
+    font-size:1.2em;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+.round-button-black {
+	width: 100%;
+	height:0;
+	padding-bottom: 100%;
+    border-radius: 50%;
+	border:4px solid #000000;
+    overflow:hidden;
+    
+    background: #414040; 
+    box-shadow: 0 0 3px gray;
+}
+.round-button-black:hover {
+	background:#4A4A4A;
+}
+.round-button b {
+    display:block;
+	float:left;
+	width:100%;
+	padding-top:50%;
+    padding-bottom:50%;
+	line-height:1em;
+	margin-top:-1em;
+	text-align:center;
+	color:#e2eaf3;
+    font-family:Verdana;
+    font-size:1.2em;
+    font-weight:bold;
+    text-decoration:none;
+}
+
 
 
