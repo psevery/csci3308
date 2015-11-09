@@ -70,23 +70,9 @@ canvas {
 }
 .round-button-black:hover {
 	background:#4A4A4A;
-	box-shadow: 0 0 15px gray;
+	box-shadow: 0 0 15px DimGray;
 }
-.round-button b {
-    display:block;
-	float:left;
-	width:100%;
-	padding-top:50%;
-    padding-bottom:50%;
-	line-height:1em;
-	margin-top:-1em;
-	text-align:center;
-	color:#e2eaf3;
-    font-family:Verdana;
-    font-size:1.2em;
-    font-weight:bold;
-    text-decoration:none;
-}
+
 
 
 

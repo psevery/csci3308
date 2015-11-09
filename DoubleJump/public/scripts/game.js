@@ -351,9 +351,9 @@ Game.prototype.get_score = function(){
     piecesLeft = this.count_pieces();
     redsLeft = piecesLeft[0];
     blacksLeft = piecesLeft[1];
-    redActive = "<ins><b> RED </b></ins> &oplus;";
+    redActive = "<ins><b> RED </b></ins> &#8826 ";
     redInactive = "RED";
-    blackActive = "<ins><b> BLACK </b></ins> &oplus;"; 
+    blackActive = "<ins><b> BLACK </b></ins> &#8826 "; 
     blackInactive = "BLACK";
     if (this.turn == 2){ 
         document.getElementById("redname").innerHTML = redActive;
