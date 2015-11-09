@@ -1,11 +1,11 @@
-var board_img;
-var pieces_img;
+var board_img = new Image();
+var pieces_img = new Image();
 var canvas;
 var context;
 
 function loadCanvas() {
-  var canvas = document.getElementById("canvas");
-  var context = canvas.getContext("2d");
+  canvas = document.getElementById("canvas");
+  context = canvas.getContext("2d");
 }
 
 function loadImages() {
