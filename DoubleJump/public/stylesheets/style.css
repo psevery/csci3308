@@ -14,9 +14,11 @@ canvas {
 }
 #outer
 {
+	padding-top: 20%;
     width:100%;
     text-align: center;
 }
+
 .inner
 {
     display: inline-block;
@@ -32,11 +34,12 @@ canvas {
 	border:4px solid #990000;
     overflow:hidden;
     
-    background: #CC0000; 
+    background: #B60707; 
     box-shadow: 0 0 3px gray;
 }
 .round-button-red:hover {
-	background:#FF0000;
+	background:#C70808;
+	box-shadow: 0 0 15px red;
 }
 .round-button a {
     display:block;
@@ -67,6 +70,7 @@ canvas {
 }
 .round-button-black:hover {
 	background:#4A4A4A;
+	box-shadow: 0 0 15px gray;
 }
 .round-button b {
     display:block;
