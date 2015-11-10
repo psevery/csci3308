@@ -163,8 +163,9 @@ Game.prototype.xy_to_rowcol = function(x, y) {
 }
 
 Game.prototype.mouse_handler = function(e) {
-    var x = (e.clientX)- canvas.offsetLeft;
-    var y = (e.clientY) - canvas.offsetTop;
+    var offset = canvas.getBoundingClientRect();
+    var x = (e.clientX)- offset.left
+    var y = (e.clientY) - offset.top;
     var rowcol = this.xy_to_rowcol(x, y);
     //to
     if (rowcol[0] > 7 || rowcol[1] > 7){
