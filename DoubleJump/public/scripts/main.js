@@ -2,7 +2,6 @@
 // a function that runs a test and uses an assertion/etc
 function main() {
     loadCanvas();
-    run_tests();
     var game = Game.new();
     game.start();
 }

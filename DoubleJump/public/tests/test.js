@@ -171,3 +171,6 @@ function run_tests() {
         tests[test]();
     }
 }
+
+// Actually run tests
+run_tests();

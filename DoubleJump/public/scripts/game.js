@@ -7,7 +7,7 @@
 //  game.players: returns array of 2 Player objects
 //  game.turn: id number of current player
 var Game = function(board, players, turn, first_click,
-                    second_click, move_to_execute, last_double_jump)
+                    second_click, move_to_execute, last_double_jump, score)
 {
     this.board = board;
     this.score = score;
