@@ -75,11 +75,11 @@ var tests = {
             [0, 2, 0, 2, 0, 2, 0, 2],
         ])));
     },
-    /*
-    hop: function() {
-        var final = run_test_game([
-        var game = new Game();
-        game.board = [
+
+    // Test Purpose: Test correctness of valid_hop()
+    // Src Location: game.js: Game.prototype.valid_hop(src, dst)
+    valid_hop: function() {
+        var game = Game.new([
             [1, 0, 1, 0, 1, 0, 1, 0],
             [0, 1, 0, 1, 0, 1, 0, 1],
             [1, 0, 1, 0, 1, 0, 1, 0],
@@ -88,16 +88,9 @@ var tests = {
             [0, 2, 0, 0, 0, 2, 0, 2],
             [2, 0, 2, 0, 2, 0, 2, 0],
             [0, 2, 0, 2, 0, 2, 0, 2],
-        ];
-        game.board.rows = 8;
-        game.board.cols = 8;
-        //game.print();
-
-        assert(game.valid_move([2,2], [4,4]));
-        assert(!game.valid_move([2,2], [3,4]));
-        assert(!game.valid_move([2,2], [4,3]));
-        assert(!game.valid_move([2,2], [3,3]));
-        assert(!game.valid_move([2,2], [5,5]));
+        ]);
+        assert("Single hop from 2,2 to 4,4: should succeed", game.valid_hop([2,2], [4,4]));
+        assert("Hop from 2,2 to 5,5: should NOT succeed", !game.valid_hop([2,2], [5,5]));
     },
     /*
     king_me: function() {
