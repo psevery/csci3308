@@ -26,7 +26,7 @@ var tests = {
             [0, 2, 0, 2, 0, 2, 0, 2],
             [2, 0, 2, 0, 2, 0, 2, 0],
             [0, 2, 0, 2, 0, 2, 0, 2],
-        ])), "simple_move: 2,2 to 3,3");
+        ])), "simple_move: 2,2 to 3,3 is valid");
         var final = run_test_game([ [[2,2],[3,1]] ]);
         assert(final.board.equals(Board.new([
             [1, 0, 1, 0, 1, 0, 1, 0],
@@ -37,7 +37,7 @@ var tests = {
             [0, 2, 0, 2, 0, 2, 0, 2],
             [2, 0, 2, 0, 2, 0, 2, 0],
             [0, 2, 0, 2, 0, 2, 0, 2],
-        ])), "simple_move: 2,2 to 3,1");
+        ])), "simple_move: 2,2 to 3,1 is valid");
         // Try all other squares, assert no change in state
         for (var i = 0; i < BOARD_ROWS; ++i) {
             for (var j = 0; j < BOARD_COLS; ++j) {
@@ -53,7 +53,7 @@ var tests = {
                     [0, 2, 0, 2, 0, 2, 0, 2],
                     [2, 0, 2, 0, 2, 0, 2, 0],
                     [0, 2, 0, 2, 0, 2, 0, 2],
-                ])), "simple_move: 2,2 to " + i + "," + j + " invalid");
+                ])), "simple_move: 2,2 to " + i + "," + j + " is invalid");
             }
         }
     },
@@ -111,13 +111,13 @@ var tests = {
 
         // King move test
         // Change turn to red
-        assert(game.valid_hop([2,2], [4,4]));
-        assert(game.valid_move([2,2], [3,1]));
-        assert(game.valid_move([2,2], [1,1]));
-        assert(game.valid_hop([3,5], [1,7]));
-        assert(game.valid_move([3,5], [2,4]));
-        assert(!game.valid_move([2,2], [2,3]));
-        assert(!game.valid_move([2,2], [3,2]));
+        assert(game.valid_hop([2,2], [4,4]), "Red King should be able to execute hop backwards");
+        assert(game.valid_move([2,2], [3,1]), "Red King should be able to move backwards");
+        assert(game.valid_move([2,2], [1,1]), "Red King should be able to move forwards");
+        assert(game.valid_hop([3,5], [1,7]), "Black King should be able to hop backwards");
+        assert(game.valid_move([3,5], [2,4]), "Black King should be able to move backwards");
+        assert(!game.valid_move([2,2], [2,3]), "Red King should not be able to move sideways");
+        assert(!game.valid_move([2,2], [3,2]), "Red king should not be able to move onto a piece inhabited by a Black pawn");
     },
     double_jump: function() {
         var final = run_test_game([
