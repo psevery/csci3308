@@ -17,14 +17,44 @@ function addMove(move){
 }
 
 function isValid(move){
-  var pieceType = parseInt(board.pieces.charAt((parseInt(move.charAt(0), 10)-1)*8+parseInt(move.charAt(1))-1),10)%2;
-  // Move color test
-  if((pieceType==1 && board.whiteMove) || (pieceType==0 && !board.whiteMove) || (move.substr(0,2)==move.substr(2,4))) {
+  var pieceType = parseInt(board.pieces.charAt((parseInt(move.charAt(0), 10)-1)*8+parseInt(move.charAt(1))-1),10);
+  var fromRow = parseInt(move.charAt(0),10);
+  var fromCol = parseInt(move.charAt(1),10);
+  var toRow = parseInt(move.charAt(2),10);
+  var toCol = parseInt(move.charAt(3),10);
+  if((pieceType%2==1 && board.whiteMove) || (pieceType%2==0 && !board.whiteMove) || (move.substr(0,2)==move.substr(2,4))) {
     return false;
   }
-  // Move direction test
-  if((pieceType==0 && move.substr(0,1)<move.substr(2,3)) || (pieceType==1 && move.substr(0,1)>move.substr(2,3))) {
+  if((pieceType==2 && fromRow<toRow) || (pieceType==1 && fromRow>toRow)) {
     return false;
+  }
+  if(fromCol == toCol){
+    return false;
+  }
+  if(Math.abs(fromCol-toCol)>2){
+    return false;
+  }
+  if(pieceAt(toRow,toCol)!=0){
+    return false;
+  }
+  if(Math.abs(fromCol-toCol)==2 && pieceAt((toRow-fromRow)/2+fromRow,(toCol-fromCol)/2+fromCol)==0){
+    return false;
+  }
+  if(Math.abs(fromCol-toCol)==2 && pieceAt((toRow-fromRow)/2+fromRow,(toCol-fromCol)/2+fromCol)!=0){
+    var from_index = ((toRow-fromRow)/2+fromRow-1)*8+(toCol-fromCol)/2+fromCol-1;
+    board.pieces = board.pieces.substr(0,from_index) + "0" + board.pieces.substr(from_index+1);
+  }
+  if(pieceType==2 && toRow==1){
+    var from_index = (fromRow-1)*8+fromCol-1;
+    board.pieces = board.pieces.substr(0,from_index) + "4" + board.pieces.substr(from_index+1);
+  }
+  else if(pieceType==1 && toRow==8){
+    var from_index = (fromRow-1)*8+fromCol-1;
+    board.pieces = board.pieces.substr(0,from_index) + "3" + board.pieces.substr(from_index+1);
   }
   return true;
+}
+
+function pieceAt(row, col) {
+  return parseInt(board.pieces.charAt((row-1)*8+(col-1)),10);
 }
