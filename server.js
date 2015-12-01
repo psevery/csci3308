@@ -16,13 +16,15 @@ server.listen(app.get('port'),app.get('ip'));
 
 app.use(express.static('public'));
 
-var board = {
+var startBoard = {
   pieces: "1010101001010101101010100000000000000000020202022020202002020202",
   topx: 0,
   topy: 20,
   width: 9,
   whiteMove: true
 };
+
+var board = startBoard;
 
 io.on('connection',function(socket) {
   console.log('connection');
@@ -35,8 +37,7 @@ io.on('connection',function(socket) {
   });
   socket.on('refresh',function(refresh){
     console.log('refresh');
-    board.pieces = "1010101001010101101010100000000000000000020202022020202002020202";
-    board.whiteMove = true;
+    board = startBoard;
     io.emit('board',board);
   });
 });
