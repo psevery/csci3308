@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>"DoubleJump"</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="scripts/multiplayerMain.js"></script>
+    <script src="scripts/io.js"></script>
+    <script src="scripts/draw.js"></script>
+    <script src="scripts/database.js"></script>
+    <script src="scripts/events.js"></script>
+  </head>
+  <body onload="main()">
+    <a href='index.html'>
+      <img src='images/logo.png' width='256' height='64'></img>
+    </a>
+    <p></p>
+    <p id="user1">Opponent</p>
+    <canvas id="canvas" width="600" height="620" style="float:left"></canvas>
+    <div id="moveIndicator" style="width:50px;height:50px;background-color:red;float:left"></div>
+    <p id="user2" style="clear:left">You</p>
+    <button type="button" onclick="refreshBoard()">Refresh Board</button>
+  </body>
+</html>
