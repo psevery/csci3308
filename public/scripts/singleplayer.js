@@ -50,6 +50,9 @@ function isValid(move){
   if(Math.abs(fromCol-toCol)==2 && pieceAt((toRow-fromRow)/2+fromRow,(toCol-fromCol)/2+fromCol)==0){
     return false;
   }
+  if(Math.abs(toCol-fromCol)!=Math.abs(toRow-fromRow)){
+    return false;
+  }
   if(Math.abs(fromCol-toCol)==2 && pieceAt((toRow-fromRow)/2+fromRow,(toCol-fromCol)/2+fromCol)!=0){
     var from_index = ((toRow-fromRow)/2+fromRow-1)*8+(toCol-fromCol)/2+fromCol-1;
     board.pieces = board.pieces.substr(0,from_index) + "0" + board.pieces.substr(from_index+1);
