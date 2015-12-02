@@ -52,7 +52,7 @@ function isValid(move){
       return false;
     }
   }
-  else if((pieceType==2 && fromRow<toRow) || (pieceType==1 && fromRow>toRow)) {
+  else if((pieceType==2 && fromRow<=toRow) || (pieceType==1 && fromRow>=toRow)) {
     return false;
   }
   if((pieceType%2==1 && board.whiteMove) || (pieceType%2==0 && !board.whiteMove) || (move.substr(0,2)==move.substr(2,4))) {
