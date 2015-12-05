@@ -7,6 +7,11 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
+var MongoClient = require('mongodb').MongoClient;
+var assert = require('assert');
+var ObjectId = require('mongodb').ObjectID;
+var mongourl = 'mongodb://localhost:27017/test';
+
 var gameSearch = false;
 var boardBuffer;
 //app.set('port', process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 3002);
@@ -62,3 +67,7 @@ io.on('connection',function(socket) {
 //  });
 });
 
+MongoClient.connect(mongourl, function(err, db) {
+  assert.equal(null, err);
+  db.close();
+});
