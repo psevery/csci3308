@@ -60,7 +60,7 @@ io.on('connection',function(socket) {
   socket.on('login', function(username) {
     MongoClient.connect(mongourl, function(err, db) {
       assert.equal(null, err);
-      login(db, username, function() { db.close();});
+      login(db, username, socket.id, function() { db.close();});
     });
   });
 
@@ -74,21 +74,27 @@ io.on('connection',function(socket) {
 //  });
 });
 
-var login = function(db, username, callback) {
-  var cursor = db.collection('users').find( { "name": username });
-  cursor.each(function(err, doc) {
+var login = function(db, username, socketId, callback) {
+  var newuser = true;
+  var cursor = db.collection('users').find( { "name": username } );
+  cursor.toArray(function(err, result) {
     assert.equal(err, null);
-    if(doc != null) {
-      db.collection('users').updateOne( { "name": username }, { $inc: { "stats.logins": 1} });
+    if(result.length > 0) {
+      db.collection('users').updateOne( { "name": username }, { $inc: { "stats.logins": 1 } } );
     } else {
-      db.collection('users').insertOne( {
+      var newdoc = {
         "name" : username,
         "stats": {
-          "logins": 1,
+          "logins": 0,
           "wins" : 0,
           "losses": 0
         }
-      });
+      };
+      db.collection('users').insertOne(newdoc);
+      db.collection('users').updateOne( { "name": username }, { $inc: { "stats.logins": 1 } } );
+      result[0] = newdoc;
     }
+    io.to(socketId).emit('stats', result[0]);
+    console.log(result[0]);
   });
 };
