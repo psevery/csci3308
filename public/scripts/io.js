@@ -48,6 +48,12 @@ function addMove(move){
 }
 
 function isValid(move){
+  if(username==board.whitePlayer.nickname && !board.whiteMove){
+    return false;
+  }
+  if(username==board.blackPlayer.nickname && board.whiteMove){
+    return false;
+  }
   var pieceType = parseInt(board.pieces.charAt((parseInt(move.charAt(0), 10)-1)*8+parseInt(move.charAt(1))-1),10);
   var fromRow = parseInt(move.charAt(0),10);
   var fromCol = parseInt(move.charAt(1),10);
@@ -114,16 +120,16 @@ function pieceAt(row, col) {
 function isDoubleJumpAvailable(move,pieceType) {
   var startRow = parseInt(move.charAt(2),10);
   var startCol = parseInt(move.charAt(3),10);
-  if(pieceAt(startRow+1,startCol+1)!=0 && pieceAt(startRow+1,startCol+1)!=pieceType && pieceAt(startRow+2,startCol+2)==0){
+  if(pieceAt(startRow+1,startCol+1)!=0 && pieceAt(startRow+1,startCol+1)!=pieceType && pieceAt(startRow+1,startCol+1)!=(pieceType-2) && pieceAt(startRow+2,startCol+2)==0){
     return true;
   }
-  if(pieceAt(startRow+1,startCol-1)!=0 && pieceAt(startRow+1,startCol-1)!=pieceType && pieceAt(startRow+2,startCol-2)==0){
+  if(pieceAt(startRow+1,startCol-1)!=0 && pieceAt(startRow+1,startCol-1)!=pieceType && pieceAt(startRow+1,startCol-1)!=(pieceType-2) && pieceAt(startRow+2,startCol-2)==0){
     return true;
   }
-  if(pieceAt(startRow-1,startCol+1)!=0 && pieceAt(startRow-1,startCol+1)!=pieceType && pieceAt(startRow-2,startCol+2)==0){
+  if(pieceAt(startRow-1,startCol+1)!=0 && pieceAt(startRow-1,startCol+1)!=pieceType && pieceAt(startRow-1,startCol+1)!=(pieceType-2) && pieceAt(startRow-2,startCol+2)==0){
     return true;
   }
-  if(pieceAt(startRow-1,startCol-1)!=0 && pieceAt(startRow-1,startCol-1)!=pieceType && pieceAt(startRow-2,startCol-2)==0){
+  if(pieceAt(startRow-1,startCol-1)!=0 && pieceAt(startRow-1,startCol-1)!=pieceType && pieceAt(startRow-1,startCol-1)!=(pieceType-2) && pieceAt(startRow-2,startCol-2)==0){
     return true;
   }
   return false;
