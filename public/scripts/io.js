@@ -48,6 +48,12 @@ function addMove(move){
 }
 
 function isValid(move){
+  if(username==board.whitePlayer.nickname && !board.whiteMove){
+    return false;
+  }
+  if(username==board.blackPlayer.nickname && board.whiteMove){
+    return false;
+  }
   var pieceType = parseInt(board.pieces.charAt((parseInt(move.charAt(0), 10)-1)*8+parseInt(move.charAt(1))-1),10);
   var fromRow = parseInt(move.charAt(0),10);
   var fromCol = parseInt(move.charAt(1),10);
