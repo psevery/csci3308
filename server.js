@@ -58,12 +58,9 @@ io.on('connection',function(socket) {
     }
   });
   socket.on('login', function(username) {
-    console.log("Login request");
     MongoClient.connect(mongourl, function(err, db) {
       assert.equal(null, err);
-      console.log("Connected to DJDB.");
       login(db, username, function() { db.close();});
-      console.log("Disconnected from DJDB.");
     });
   });
 
@@ -81,12 +78,9 @@ var login = function(db, username, callback) {
   var cursor = db.collection('users').find( { "name": username });
   cursor.each(function(err, doc) {
     assert.equal(err, null);
-    console.log(doc);
     if(doc != null) {
-      console.log("Existing user");
       db.collection('users').updateOne( { "name": username }, { $inc: { "stats.logins": 1} });
     } else {
-      console.log("New user");
       db.collection('users').insertOne( {
         "name" : username,
         "stats": {
@@ -96,6 +90,5 @@ var login = function(db, username, callback) {
         }
       });
     }
-    callback();
   });
 };
