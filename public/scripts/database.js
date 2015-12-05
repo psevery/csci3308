@@ -7,6 +7,10 @@ function initDatabase(){
   name.innerHTML = username;
   board.whitePlayer.nickname = username;
   socket.emit('login', username);
+  socket.on('stats',function(user){
+    var timesLoggedIn = document.getElementById("timesLoggedIn");
+    timesLoggedIn.innerHTML = user.stats.logins;
+  }
 }
 
 function setOpponentName(name){
