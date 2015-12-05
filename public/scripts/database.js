@@ -10,7 +10,7 @@ function initDatabase(){
   socket.on('stats',function(user){
     var timesLoggedIn = document.getElementById("timesLoggedIn");
     timesLoggedIn.innerHTML = "Times Logged In: "+user.stats.logins.toString();
-  }
+  });
 }
 
 function setOpponentName(name){
