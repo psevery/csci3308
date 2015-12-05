@@ -6,6 +6,7 @@ function initDatabase(){
   var name = document.getElementById("user2");
   name.innerHTML = username;
   board.whitePlayer.nickname = username;
+  socket.emit('login', username);
 }
 
 function setOpponentName(name){

@@ -5,11 +5,11 @@ function main() {
   
   loadImages();
 
-  initDatabase();
-
   loadCanvas();
  
   initSocketio();
+
+  initDatabase();
 
   //board_img.onload=function(){drawBoard(board,-1)};
 

@@ -57,6 +57,16 @@ io.on('connection',function(socket) {
       console.log("match found: "+board.whitePlayer.nickname+" "+board.blackPlayer.nickname);
     }
   });
+  socket.on('login', function(username) {
+    console.log("Login request");
+    MongoClient.connect(mongourl, function(err, db) {
+      assert.equal(null, err);
+      console.log("Connected to DJDB.");
+      login(db, username, function() { db.close();});
+      console.log("Disconnected from DJDB.");
+    });
+  });
+
 //  socket.on('getBoard',function(state){
 //    io.emit('board',board);
 //  });
@@ -67,7 +77,25 @@ io.on('connection',function(socket) {
 //  });
 });
 
-MongoClient.connect(mongourl, function(err, db) {
-  assert.equal(null, err);
-  db.close();
-});
+var login = function(db, username, callback) {
+  var cursor = db.collection('users').find( { "name": username });
+  cursor.each(function(err, doc) {
+    assert.equal(err, null);
+    console.log(doc);
+    if(doc != null) {
+      console.log("Existing user");
+      db.collection('users').updateOne( { "name": username }, { $inc: { "stats.logins": 1} });
+    } else {
+      console.log("New user");
+      db.collection('users').insertOne( {
+        "name" : username,
+        "stats": {
+          "logins": 1,
+          "wins" : 0,
+          "losses": 0
+        }
+      });
+    }
+    callback();
+  });
+};
