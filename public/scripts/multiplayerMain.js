@@ -1,9 +1,9 @@
 var board;
 
 function main() {
-  initDatabase();
-
   initBoard();
+
+  initDatabase();
 
   loadCanvas();
  
@@ -11,7 +11,7 @@ function main() {
 
   initSocketio();
 
-  board_img.onload=function(){drawBoard(board,-1)};
+  //board_img.onload=function(){drawBoard(board,-1)};
 
   loadCanvasListeners();
 }
@@ -22,6 +22,8 @@ function initBoard() {
     topx: 0,
     topy: 20,
     width: 9,
-    whiteMove: true
+    whiteMove: true,
+    whitePlayer: { nickname: "a", socketId: -1},
+    blackPlayer: { nickname: "b", socketId: -1}
   };
 }

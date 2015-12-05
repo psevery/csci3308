@@ -2,6 +2,7 @@ var board_img;
 var pieces_img;
 var canvas;
 var context;
+var boardFlipped = false;
 
 function loadCanvas() {
   canvas = document.getElementById("canvas");
@@ -33,15 +34,27 @@ function drawBoard(board,mask) {
   context.clearRect(0,0,canvas.width,canvas.height);
   context.drawImage(board_img, 0, 0, 600, 597, board.topx, board.topy, 600, 597);
 
-  // Reads in the string and will draw checkers based
-  // on the character at the ith position in the string
-  for (i = 0; i < 64; i++) {
-    // If the character at position i is 0, it leaves an empty space
-    if (board.pieces.charAt(i) != "0" && i != mask) {
-      drawPiece(parseInt(board.pieces.charAt(i), 10),
-        (64 + board.width) * (i % 8) + board.topx + board.width,
-        Math.floor(i / 8) * (64 + board.width) + board.topy + board.width
-        );
+  if(!boardFlipped){
+    // Reads in the string and will draw checkers based
+    // on the character at the ith position in the string
+    for (i = 0; i < 64; i++) {
+      // If the character at position i is 0, it leaves an empty space
+      if (board.pieces.charAt(i) != "0" && i != mask) {
+        drawPiece(parseInt(board.pieces.charAt(i), 10),
+          (64 + board.width) * (i % 8) + board.topx + board.width,
+          Math.floor(i / 8) * (64 + board.width) + board.topy + board.width
+          );
+      }
+    }
+  }
+  else {
+    for (i = 0; i < 64 ; i++) {
+      if (board.pieces.charAt(63-i) != "0" && i != mask) {
+        drawPiece(parseInt(board.pieces.charAt(63-i), 10),
+          (64 + board.width) * (i % 8) + board.topx + board.width,
+          Math.floor(i / 8) * (64 + board.width) + board.topy + board.width
+          );
+      }
     }
   }
 }
