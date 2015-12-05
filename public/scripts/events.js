@@ -21,7 +21,12 @@ function mouseStart(evt,board) {
   // Saves board location of the piece being selected to mask out that
   // piece while it is being dragged
   pieceLocation = 8*(parseInt(movestr.charAt(0),10)-1)+parseInt(movestr.charAt(1),10)-1;
-  pieceBuffer = board.pieces.charAt(pieceLocation);
+  if(!boardFlipped){
+    pieceBuffer = board.pieces.charAt(pieceLocation);
+  }
+  else {
+    pieceBuffer = board.pieces.charAt(63-pieceLocation);
+  }
 }
 
 function mouseEnd(evt,board) {
@@ -31,7 +36,12 @@ function mouseEnd(evt,board) {
   }
   mouseDown = false;
   movestr = movestr + (Math.floor((evt.pageY-canvas.offsetTop-board.topy)/(board.width+64))+1).toString()+(Math.floor((evt.pageX-canvas.offsetLeft-board.topx)/(board.width+64))+1).toString();
-  addMove(movestr);
+  if(!boardFlipped){
+    addMove(movestr);
+  }
+  else {
+    addMove(((9-parseInt(movestr.charAt(0),10))%9).toString()+((9-parseInt(movestr.charAt(1),10))%9).toString()+((9-parseInt(movestr.charAt(2),10))%9).toString()+((9-parseInt(movestr.charAt(3),10))%9).toString())
+  }
   drawBoard(board,-1);
 }
 

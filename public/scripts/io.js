@@ -3,16 +3,25 @@ var doubleJump = "--";
 
 function initSocketio(){
   socket = io();
-  socket.emit('getBoard',' ');
+//  socket.emit('getBoard',' ');
   socket.on('board',function(newBoard){
     board = newBoard;
     changeMoveIndicator();
     drawBoard(board,-1);
   });
-}
-
-function refreshBoard() {
-  socket.emit('refresh','refresh');
+  socket.on('registered',function(newBoard){
+    board = newBoard;
+    setOpponentName(board.blackPlayer.nickname); 
+    if(board.blackPlayer.nickname == username){
+      setOpponentName(board.whitePlayer.nickname); 
+      boardFlipped = true;
+    }
+    else {
+      setOpponentName(board.blackPlayer.nickname); 
+    }
+    drawBoard(board,-1);
+  });
+  socket.emit('register',board);
 }
 
 function changeMoveIndicator() {
