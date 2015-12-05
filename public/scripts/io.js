@@ -24,10 +24,6 @@ function initSocketio(){
   socket.emit('register',board);
 }
 
-function refreshBoard() {
-  socket.emit('refresh','refresh');
-}
-
 function changeMoveIndicator() {
   if(board.whiteMove){
     document.getElementById("moveIndicator").setAttribute("style","width:50px;height:50px;background-color:red;float:left");
