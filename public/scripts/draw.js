@@ -14,6 +14,7 @@ function loadImages() {
   board_img.src = "../images/checkerboard.jpg";
   pieces_img = new Image();
   pieces_img.src = "../images/checker_images.png"; 
+  board_img.onload=function(){drawBoard(board,-1)};
 }
 // Drawing a checker piece.
 // image_id is the integer associated with the checker piece

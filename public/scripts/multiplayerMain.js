@@ -2,13 +2,13 @@ var board;
 
 function main() {
   initBoard();
+  
+  loadImages();
 
   initDatabase();
 
   loadCanvas();
  
-  loadImages();
-
   initSocketio();
 
   //board_img.onload=function(){drawBoard(board,-1)};
