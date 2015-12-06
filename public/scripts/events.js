@@ -54,3 +54,12 @@ function mouseMove(evt,board) {
   drawBoard(board,pieceLocation);
   drawPiece(pieceBuffer,evt.pageX-32,evt.pageY-canvas.offsetTop-32);
 }
+
+function surrender(board) {
+  if(board.blackPlayer.nickname == username) {
+    board.pieces = board.pieces.replace(/1|3/g, "0");
+  } else {
+    board.pieces = board.pieces.replace(/2|4/g, "0");
+  }
+  socket.emit('move',board);
+}
