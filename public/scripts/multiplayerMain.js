@@ -3,6 +3,8 @@ var board;
 function main() {
   initBoard();
   
+  setUsername();
+
   loadImages();
 
   loadCanvas();

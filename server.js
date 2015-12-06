@@ -74,7 +74,7 @@ io.on('connection',function(socket) {
 //  });
 });
 
-var login = function(db, username, socketId, callback) {
+function login(db, username, socketId, callback) {
   var newuser = true;
   var cursor = db.collection('users').find( { "name": username } );
   cursor.toArray(function(err, result) {
