@@ -1,5 +1,19 @@
+/**
+ *  Singleplayer module.
+ *  @module singleplayer
+ */
+
+ /**
+ *  doublejump global for the game, flag 
+ * @global
+ * @type string
+ */
 var doubleJump = "--";
 
+/**
+ *  add a move to the board
+ * @param {array} move
+ */
 function addMove(move){
   if(!isValid(move)){
     return;
@@ -17,7 +31,12 @@ function addMove(move){
     document.getElementById("moveIndicator").setAttribute("style","width:50px;height:50px;background-color:black");
   }
 }
-
+/**
+ *  returns validity of a move 
+ * @param {array} move
+ * @returns {Boolean}
+ */
+}
 function isValid(move){
   var pieceType = parseInt(board.pieces.charAt((parseInt(move.charAt(0), 10)-1)*8+parseInt(move.charAt(1))-1),10);
   var fromRow = parseInt(move.charAt(0),10);
@@ -74,14 +93,24 @@ function isValid(move){
   }
   return true;
 }
-
+/**
+ * checks to see if a piece is at a particular square 
+ * @param {int} row
+ * @param {int} col
+ * @returns {Boolean} 
+ */
 function pieceAt(row, col) {
   if(row>8 || row <1 || col <1 || col>8) {
     return -1;
   }
   return parseInt(board.pieces.charAt((row-1)*8+(col-1)),10);
 }
-
+/**
+ * checks to see if a doublejump is an option
+ * @param {array} move
+ * @param {int} pieceType
+ * @returns {Boolean} 
+ */
 function isDoubleJumpAvailable(move,pieceType) {
   var startRow = parseInt(move.charAt(2),10);
   var startCol = parseInt(move.charAt(3),10);
