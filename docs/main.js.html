@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: main.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,55 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: main.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ *  Main module.
+ *  @module main
+ */
 
+/**
+ *  Board state, including state at each square, coordinates to draw at, width, and current turn.
+ */
+var board;
 
-    <h3> </h3>
+/**
+ *  Main function that initializes game state and starts listeners.
+ */
+function main() {
+  initBoard();
 
+  loadCanvas();
+ 
+  loadImages();
 
+  board_img.onload=function(){drawBoard(board,-1)};
 
+  loadCanvasListeners();
+}
 
-
-
-
-
-
-
-    
-
-
-
-
-
+/**
+ *  Initialize board state.
+ */
+function initBoard() {
+  board = {
+    pieces: "1010101001010101101010100000000000000000020202022020202002020202",
+    topx: 0,
+    topy: 20,
+    width: 9,
+    whiteMove: true
+  };
+}
+</code></pre>
+        </article>
+    </section>
 
 
 
