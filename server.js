@@ -36,7 +36,6 @@ app.use(express.static('public'));
 io.on('connection',function(socket) {
   console.log('connection');
   socket.on('move', function(board){
-    console.log(board);
     if(board.pieces.match(/1|3/) == null) {
       MongoClient.connect(mongourl, function(err, db) {
         assert.equal(null, err);
@@ -110,8 +109,6 @@ function login(db, username, socketId, callback) {
 };
 
 function winner(db, winnerid, blackusername, redusername, callback) {
-  console.log(blackusername);
-  console.log(redusername);
   if(winnerid == 1) {
     console.log("Black Wins!");
     db.collection('users').updateOne( { "name": blackusername }, { $inc: { "stats.wins": 1 } } );
