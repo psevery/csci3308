@@ -8,6 +8,19 @@ function initSocketio(){
     board = newBoard;
     changeMoveIndicator();
     drawBoard(board,-1);
+    if(board.pieces.match(/1|3/) == null) {
+      if(board.blackPlayer.nickname == username) {
+        window.alert("Sorry, you have lost.");
+      } else {
+        window.alert("Yay! You are a Winner!");
+      }
+    } else if(board.pieces.match(/2|4/) == null) {
+      if(board.blackPlayer.nickname == username) {
+        window.alert("Yay! You are a Winner!");
+      } else {
+        window.alert("Sorry, you have lost.");
+      }
+    }
   });
   socket.on('registered',function(newBoard){
     board = newBoard;
