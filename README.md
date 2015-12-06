@@ -1,3 +1,19 @@
-The OpenShift `nodejs` cartridge documentation can be found at:
+<img src="/public/images/logo.png"/>
 
-http://openshift.github.io/documentation/oo_cartridge_guide.html#nodejs
+#DoubleJump#
+
+http://doublejump-rbaten.rhcloud.com/
+
+A checkers game designed using:
+* Express.js
+* JavaScript
+* JSDoc
+* MongoDB
+* Node.js
+* Socket.IO
+
+Authors:
+* Ryan Baten
+* Peter Delevoryas
+* Andrew Huang
+* Patrick Severy
