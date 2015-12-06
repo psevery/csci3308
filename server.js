@@ -36,6 +36,18 @@ app.use(express.static('public'));
 io.on('connection',function(socket) {
   console.log('connection');
   socket.on('move', function(board){
+    console.log(board);
+    if(board.pieces.match(/1|3/) == null) {
+      MongoClient.connect(mongourl, function(err, db) {
+        assert.equal(null, err);
+        winner(db, 2, board.blackPlayer.nickname, board.whitePlayer.nickname, function() { db.close(); });
+      });
+    } else if(board.pieces.match(/2|4/) == null){
+      MongoClient.connect(mongourl, function(err, db) {
+        assert.equal(null, err);
+        winner(db, 1, board.blackPlayer.nickname, board.whitePlayer.nickname, function() { db.close(); });
+      });
+    }
     io.to(board.whitePlayer.socketId).emit('board',board);
     io.to(board.blackPlayer.socketId).emit('board',board);
   });
@@ -75,7 +87,6 @@ io.on('connection',function(socket) {
 });
 
 function login(db, username, socketId, callback) {
-  var newuser = true;
   var cursor = db.collection('users').find( { "name": username } );
   cursor.toArray(function(err, result) {
     assert.equal(err, null);
@@ -95,6 +106,19 @@ function login(db, username, socketId, callback) {
       result[0] = newdoc;
     }
     io.to(socketId).emit('stats', result[0]);
-    console.log(result[0]);
   });
+};
+
+function winner(db, winnerid, blackusername, redusername, callback) {
+  console.log(blackusername);
+  console.log(redusername);
+  if(winnerid == 1) {
+    console.log("Black Wins!");
+    db.collection('users').updateOne( { "name": blackusername }, { $inc: { "stats.wins": 1 } } );
+    db.collection('users').updateOne( { "name": redusername }, { $inc: { "stats.losses": 1 } } );
+  } else {
+    console.log("Red Wins!");
+    db.collection('users').updateOne( { "name": blackusername }, { $inc: { "stats.losses": 1 } } );
+    db.collection('users').updateOne( { "name": redusername }, { $inc: { "stats.wins": 1 } } );
+  } 
 };
