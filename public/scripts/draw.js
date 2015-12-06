@@ -5,37 +5,31 @@
 
 /**
  *  WebGL texture, checker board image.
- *  @static
  */
 var board_img;
 
 /**
  *  WebGL texture, checker pieces sprite sheet.
- *  @static
  */
 var pieces_img;
 
 /**
  *  HTML5 canvas element with id "canvas".
- *  @static
  */
 var canvas;
 
 /**
  *  CanvasRenderingContext2D for HTML5 canvas element with id "canvas".
- *  @static
  */
 var context;
 
 /**
  *  Boolean that determines whether the board should be flipped for the current player.
- *  @static
  */
 var boardFlipped = false;
 
 /**
  *  Initializes global context variable with CanvasRenderingContext2D from document element with id "canvas".
- *  @static
  */
 function loadCanvas() {
   canvas = document.getElementById("canvas");
@@ -43,8 +37,7 @@ function loadCanvas() {
 }
 
 /**
- *  Initializes static image vars.
- *  @static
+ *  Initializes image variables.
  */
 function loadImages() {
   board_img = new Image();
@@ -71,7 +64,6 @@ function drawPiece(image_id, x, y) {
  *  Draws checkerboard to canvas.
  *  @param {object} board - A Javascript object containing the board state.
  *  @param {integer} mask - Index of piece to be masked (during piece drag), -1 otherwise.
- *  @static
  */
 function drawBoard(board,mask) {
   context.clearRect(0,0,canvas.width,canvas.height);

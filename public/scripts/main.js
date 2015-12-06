@@ -1,5 +1,16 @@
+/**
+ *  Main module.
+ *  @module main
+ */
+
+/**
+ *  Board state, including state at each square, coordinates to draw at, width, and current turn.
+ */
 var board;
 
+/**
+ *  Initialize all game state and start listeners.
+ */
 function main() {
   initBoard();
 
@@ -12,6 +23,9 @@ function main() {
   loadCanvasListeners();
 }
 
+/**
+ *  Initialize board state.
+ */
 function initBoard() {
   board = {
     pieces: "1010101001010101101010100000000000000000020202022020202002020202",
