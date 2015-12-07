@@ -4,7 +4,7 @@
  */
 
 /**
- *  Logins to the database with a username and displays the associated stats.
+ *  Login to the server with a username and displays the associated stats.
  */
 function initDatabase(){
   socket.emit('login', username);
@@ -13,4 +13,4 @@ function initDatabase(){
     stats.innerHTML = "Personal Stats:<br>Times Logged In: "+user.stats.logins.toString()
       +"<br>Wins: "+user.stats.wins.toString()+"<br>Losses: "+user.stats.losses.toString();
   });
-
+}
