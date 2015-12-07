@@ -18,7 +18,7 @@ Authors:
 * Andrew Huang
 * Patrick Severy
 
+***
 Configuration:
-For local hosting, go into server.js and uncomment
-the localhosting section. For use on openshift,
-uncomment the openshift section in that same file.
+
+Edit server.js and uncomment either the local hosting or openshift sections
