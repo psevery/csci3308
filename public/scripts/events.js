@@ -1,16 +1,49 @@
+/**
+ * Events module.
+ * @module events
+ */
+
+/**
+ * Stores user provided moves.
+ * @type {string}
+ */
 var movestr;
+
+/**
+ * Determines if the left mouse button is being held down.
+ * @type {boolean}
+ */
 var mouseDown;
+
+/**
+ * Holds type of piece currently being selected.
+ * @type {string}
+ */
 var pieceBuffer;
+
+/**
+ * Saves the starting location of the piece as it is being dragged.
+ * @type {string}
+ */
 var pieceLocation;
+
 mouseDown = false;
 movestr = "";
 
+/**
+ * Loads listeners on the canvas element to check for mouse events.
+ */
 function loadCanvasListeners() {
   canvas.addEventListener("mousedown",function(evt){mouseStart(evt,board)},false);
   canvas.addEventListener("mouseup",function(evt){mouseEnd(evt,board)},false);
   canvas.addEventListener("mousemove",function(evt){mouseMove(evt,board)},false);  
 }
 
+/**
+ * Records the coordinates of where the piece is on a left mouse click.
+ * @param {object} evt - Event object containing data captured by the listener.
+ * @param {object} board - Board object containing the current status of the board.
+ */
 function mouseStart(evt,board) {
   mouseDown = true;
  
@@ -29,6 +62,11 @@ function mouseStart(evt,board) {
   }
 }
 
+/**
+ * Records the coordinates of where the piece was placed on release of the left mouse button.
+ * @param {object} evt - Event object containing data captured by the listener.
+ * @param {object} board - Board object containing the current status of the board.
+ */
 function mouseEnd(evt,board) {
   // Makes sure that the mouse was down when mouseup was given.
   if(mouseDown == false) {
@@ -45,6 +83,11 @@ function mouseEnd(evt,board) {
   drawBoard(board,-1);
 }
 
+/**
+ * Draws the current location of the selected piece while the left mouse button is held down.
+ * @param {object} evt - Event object containing data captured by the listener.
+ * @param {object} board - Board object containing the current status of the board.
+ */
 function mouseMove(evt,board) {
   if(mouseDown == false) {
     return;
@@ -55,6 +98,10 @@ function mouseMove(evt,board) {
   drawPiece(pieceBuffer,evt.pageX-32,evt.pageY-canvas.offsetTop-32);
 }
 
+/**
+ * Clears the pieces of the calling user from the board to forfeit the game.
+ * @param {object} board - Board object containing the current status of the board.
+ */ 
 function surrender(board) {
   if(board.blackPlayer.nickname == username) {
     board.pieces = board.pieces.replace(/1|3/g, "0");
