@@ -22,3 +22,12 @@ Authors:
 Configuration:
 
 Edit server.js and uncomment either the local hosting or openshift sections
+
+***
+npm modules included:
+
+socket.io http://socket.io/
+
+mongodb https://www.npmjs.com/package/mongodb
+
+express https://www.npmjs.com/package/express
