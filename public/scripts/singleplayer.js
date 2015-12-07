@@ -36,7 +36,6 @@ function addMove(move){
  * @param {array} move
  * @returns {Boolean}
  */
-}
 function isValid(move){
   var pieceType = parseInt(board.pieces.charAt((parseInt(move.charAt(0), 10)-1)*8+parseInt(move.charAt(1))-1),10);
   var fromRow = parseInt(move.charAt(0),10);
@@ -67,6 +66,9 @@ function isValid(move){
     return false;
   }
   if(Math.abs(fromCol-toCol)==2 && pieceAt((toRow-fromRow)/2+fromRow,(toCol-fromCol)/2+fromCol)==0){
+    return false;
+  }
+  if(Math.abs(fromCol-toCol)==2 && pieceAt((toRow-fromRow)/2+fromRow,(toCol-fromCol)/2+fromCol)%2==pieceAt(fromRow,fromCol)%2){
     return false;
   }
   if(Math.abs(toCol-fromCol)!=Math.abs(toRow-fromRow)){
@@ -114,17 +116,18 @@ function pieceAt(row, col) {
 function isDoubleJumpAvailable(move,pieceType) {
   var startRow = parseInt(move.charAt(2),10);
   var startCol = parseInt(move.charAt(3),10);
-  if(pieceAt(startRow+1,startCol+1)!=0 && pieceAt(startRow+1,startCol+1)!=pieceType && pieceAt(startRow+1,startCol+1)!=(pieceType-2) && pieceAt(startRow+2,startCol+2)==0){
+  if(pieceAt(startRow+1,startCol+1)!=0 && pieceAt(startRow+1,startCol+1)%2!=pieceType%2 && pieceAt(startRow+1,startCol+1)!=(pieceType-2) && pieceAt(startRow+2,startCol+2)==0){
     return true;
   }
-  if(pieceAt(startRow+1,startCol-1)!=0 && pieceAt(startRow+1,startCol-1)!=pieceType && pieceAt(startRow+1,startCol-1)!=(pieceType-2) && pieceAt(startRow+2,startCol-2)==0){
+  if(pieceAt(startRow+1,startCol-1)!=0 && pieceAt(startRow+1,startCol-1)%2!=pieceType%2 && pieceAt(startRow+1,startCol-1)!=(pieceType-2) && pieceAt(startRow+2,startCol-2)==0){
     return true;
   }
-  if(pieceAt(startRow-1,startCol+1)!=0 && pieceAt(startRow-1,startCol+1)!=pieceType && pieceAt(startRow-1,startCol+1)!=(pieceType-2) && pieceAt(startRow-2,startCol+2)==0){
+  if(pieceAt(startRow-1,startCol+1)!=0 && pieceAt(startRow-1,startCol+1)%2!=pieceType%2 && pieceAt(startRow-1,startCol+1)!=(pieceType-2) && pieceAt(startRow-2,startCol+2)==0){
     return true;
   }
-  if(pieceAt(startRow-1,startCol-1)!=0 && pieceAt(startRow-1,startCol-1)!=pieceType && pieceAt(startRow-1,startCol-1)!=(pieceType-2) && pieceAt(startRow-2,startCol-2)==0){
+  if(pieceAt(startRow-1,startCol-1)!=0 && pieceAt(startRow-1,startCol-1)%2!=pieceType%2 && pieceAt(startRow-1,startCol-1)!=(pieceType-2) && pieceAt(startRow-2,startCol-2)==0){
     return true;
   }
   return false;
 }
+
