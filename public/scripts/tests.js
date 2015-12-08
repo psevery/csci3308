@@ -8,6 +8,7 @@
  */
 function initTestGame() {
   initBoard();
+  doubleJump = "--";
 }
 
 /**
@@ -44,5 +45,19 @@ function tests() {
     var singleHop = "5537";
     assert.equal(isValid(singleHop), true,
                  "Red at 5,5 hops black at 6,4, final red position 3,7");
+  });
+
+  QUnit.test("Red can double hop black", function(assert) {
+    initTestGame();
+    board.pieces = "1010101001010100101010100200000000001000020202022000202002020202";
+    var firstHop = "6446";
+    assert.equal(isValid(firstHop), true,
+                 "Red at 6,4 hops black at 5,5, final red position 4,6");
+    board.whiteMove = true;
+    assert.equal(doubleJump, "46", "doubleJump should be 46 in between hops");
+    board.pieces = "1010101001010100101010100200020000000000020002022000202002020202";
+    var secondHop = "4628";
+    assert.equal(isValid(secondHop), true,
+                 "Red at 4,6 hops black at 3,7, final red position 2,8");
   });
 }
