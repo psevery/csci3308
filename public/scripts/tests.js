@@ -37,4 +37,12 @@ function tests() {
       }
     }
   });
+
+  QUnit.test("Red can single hop black", function(assert) {
+    initTestGame();
+    board.pieces = "1010101001010101101010000000010000002000020002022020202002020202";
+    var singleHop = "5537";
+    assert.equal(isValid(singleHop), true,
+                 "Red at 5,5 hops black at 6,4, final red position 3,7");
+  });
 }
