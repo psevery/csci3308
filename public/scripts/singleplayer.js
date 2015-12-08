@@ -1,5 +1,19 @@
+/**
+ *  Singleplayer module.
+ *  @module singleplayer
+ */
+
+ /**
+ *  doublejump global for the game, flag 
+ * @global
+ * @type string
+ */
 var doubleJump = "--";
 
+/**
+ *  add a move to the board
+ * @param {array} move
+ */
 function addMove(move){
   if(!isValid(move)){
     return;
@@ -17,7 +31,11 @@ function addMove(move){
     document.getElementById("moveIndicator").setAttribute("style","width:50px;height:50px;background-color:black");
   }
 }
-
+/**
+ *  returns validity of a move 
+ * @param {array} move
+ * @returns {Boolean}
+ */
 function isValid(move){
   var pieceType = parseInt(board.pieces.charAt((parseInt(move.charAt(0), 10)-1)*8+parseInt(move.charAt(1))-1),10);
   var fromRow = parseInt(move.charAt(0),10);
@@ -50,6 +68,9 @@ function isValid(move){
   if(Math.abs(fromCol-toCol)==2 && pieceAt((toRow-fromRow)/2+fromRow,(toCol-fromCol)/2+fromCol)==0){
     return false;
   }
+  if(Math.abs(fromCol-toCol)==2 && pieceAt((toRow-fromRow)/2+fromRow,(toCol-fromCol)/2+fromCol)%2==pieceAt(fromRow,fromCol)%2){
+    return false;
+  }
   if(Math.abs(toCol-fromCol)!=Math.abs(toRow-fromRow)){
     return false;
   }
@@ -74,28 +95,39 @@ function isValid(move){
   }
   return true;
 }
-
+/**
+ * checks to see if a piece is at a particular square 
+ * @param {int} row
+ * @param {int} col
+ * @returns {Boolean} 
+ */
 function pieceAt(row, col) {
   if(row>8 || row <1 || col <1 || col>8) {
     return -1;
   }
   return parseInt(board.pieces.charAt((row-1)*8+(col-1)),10);
 }
-
+/**
+ * checks to see if a doublejump is an option
+ * @param {array} move
+ * @param {int} pieceType
+ * @returns {Boolean} 
+ */
 function isDoubleJumpAvailable(move,pieceType) {
   var startRow = parseInt(move.charAt(2),10);
   var startCol = parseInt(move.charAt(3),10);
-  if(pieceAt(startRow+1,startCol+1)!=0 && pieceAt(startRow+1,startCol+1)!=pieceType && pieceAt(startRow+1,startCol+1)!=(pieceType-2) && pieceAt(startRow+2,startCol+2)==0){
+  if(pieceAt(startRow+1,startCol+1)!=0 && pieceAt(startRow+1,startCol+1)%2!=pieceType%2 && pieceAt(startRow+1,startCol+1)!=(pieceType-2) && pieceAt(startRow+2,startCol+2)==0){
     return true;
   }
-  if(pieceAt(startRow+1,startCol-1)!=0 && pieceAt(startRow+1,startCol-1)!=pieceType && pieceAt(startRow+1,startCol-1)!=(pieceType-2) && pieceAt(startRow+2,startCol-2)==0){
+  if(pieceAt(startRow+1,startCol-1)!=0 && pieceAt(startRow+1,startCol-1)%2!=pieceType%2 && pieceAt(startRow+1,startCol-1)!=(pieceType-2) && pieceAt(startRow+2,startCol-2)==0){
     return true;
   }
-  if(pieceAt(startRow-1,startCol+1)!=0 && pieceAt(startRow-1,startCol+1)!=pieceType && pieceAt(startRow-1,startCol+1)!=(pieceType-2) && pieceAt(startRow-2,startCol+2)==0){
+  if(pieceAt(startRow-1,startCol+1)!=0 && pieceAt(startRow-1,startCol+1)%2!=pieceType%2 && pieceAt(startRow-1,startCol+1)!=(pieceType-2) && pieceAt(startRow-2,startCol+2)==0){
     return true;
   }
-  if(pieceAt(startRow-1,startCol-1)!=0 && pieceAt(startRow-1,startCol-1)!=pieceType && pieceAt(startRow-1,startCol-1)!=(pieceType-2) && pieceAt(startRow-2,startCol-2)==0){
+  if(pieceAt(startRow-1,startCol-1)!=0 && pieceAt(startRow-1,startCol-1)%2!=pieceType%2 && pieceAt(startRow-1,startCol-1)!=(pieceType-2) && pieceAt(startRow-2,startCol-2)==0){
     return true;
   }
   return false;
 }
+
