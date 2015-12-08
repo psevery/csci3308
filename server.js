@@ -12,9 +12,9 @@ var ObjectId = require('mongodb').ObjectID;
 
 // For local hosting uncomment the code in this section:
 // =====================================================
-//var mongourl = 'mongodb://localhost:27017/test';
-//app.set('port', 3000);
-//app.set('ip', "127.0.0.1");
+var mongourl = 'mongodb://localhost:27017/test';
+app.set('port', 3000);
+app.set('ip', "127.0.0.1");
 // =====================================================
 
 // connectionstring example from openshift mongodb https://blog.openshift.com/getting-started-with-mongodb-on-nodejs-on-openshift/

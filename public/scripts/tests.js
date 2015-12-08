@@ -3,8 +3,13 @@
  * @module tests
  */
 
+function initTestGame() {
+  initBoard();
+}
+
 function tests() {
-  QUnit.test("hello test", function( assert ) {
-    assert.ok(1 == "1", "Passed!");
+  QUnit.test("First Move Is Red", function(assert) {
+    initTestGame();
+    assert.equal(board.whiteMove, true, "board.whiteMove == true");
   });
 }
