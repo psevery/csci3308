@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: events</title>
+    <title>JSDoc: Module: io</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: events</h1>
+    <h1 class="page-title">Module: io</h1>
 
     
 
@@ -38,7 +38,7 @@
     <div class="container-overview">
     
         
-            <div class="description">Module for mouse events.</div>
+            <div class="description">Socket IO and networking module.</div>
         
 
         
@@ -87,7 +87,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="events.js.html">events.js</a>, <a href="events.js.html#line1">line 1</a>
+        <a href="io.js.html">io.js</a>, <a href="io.js.html#line1">line 1</a>
     </li></ul></dd>
     
 
@@ -132,85 +132,13 @@
 
         
             
-<h4 class="name" id="~mouseDown"><span class="type-signature">(inner) </span>mouseDown<span class="type-signature"> :boolean</span></h4>
+<h4 class="name" id="~doubleJump"><span class="type-signature">(inner) </span>doubleJump<span class="type-signature"> :string</span></h4>
 
 
 
 
 <div class="description">
-    Determines if the left mouse button is being held down.
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">boolean</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="events.js.html">events.js</a>, <a href="events.js.html#line16">line 16</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="~movestr"><span class="type-signature">(inner) </span>movestr<span class="type-signature"> :string</span></h4>
-
-
-
-
-<div class="description">
-    Stores user provided moves.
+    Variable used to store previous jump in multi-jump sequence.
 </div>
 
 
@@ -258,7 +186,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="events.js.html">events.js</a>, <a href="events.js.html#line10">line 10</a>
+        <a href="io.js.html">io.js</a>, <a href="io.js.html#line15">line 15</a>
     </li></ul></dd>
     
 
@@ -276,26 +204,16 @@
 
         
             
-<h4 class="name" id="~pieceBuffer"><span class="type-signature">(inner) </span>pieceBuffer<span class="type-signature"> :string</span></h4>
+<h4 class="name" id="~socket"><span class="type-signature">(inner) </span>socket<span class="type-signature"></span></h4>
 
 
 
 
 <div class="description">
-    Holds type of piece currently being selected.
+    Variable for socket.io context object.
 </div>
 
 
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">string</span>
-
-
-        </li>
-    </ul>
 
 
 
@@ -330,79 +248,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="events.js.html">events.js</a>, <a href="events.js.html#line22">line 22</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="~pieceLocation"><span class="type-signature">(inner) </span>pieceLocation<span class="type-signature"> :string</span></h4>
-
-
-
-
-<div class="description">
-    Saves the starting location of the piece as it is being dragged.
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">string</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="events.js.html">events.js</a>, <a href="events.js.html#line28">line 28</a>
+        <a href="io.js.html">io.js</a>, <a href="io.js.html#line9">line 9</a>
     </li></ul></dd>
     
 
@@ -429,96 +275,14 @@
 
     
 
-    <h4 class="name" id="~loadCanvasListeners"><span class="type-signature">(inner) </span>loadCanvasListeners<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="~addMove"><span class="type-signature">(inner) </span>addMove<span class="signature">(move)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Loads listeners on the canvas element to check for mouse events.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="events.js.html">events.js</a>, <a href="events.js.html#line36">line 36</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="~mouseEnd"><span class="type-signature">(inner) </span>mouseEnd<span class="signature">(evt, board)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Records the coordinates of where the piece was placed on release of the left mouse button.
+    If a valid move, changes game state and emits new game state to server. Otherwise, return.
 </div>
 
 
@@ -554,13 +318,13 @@
 
         <tr>
             
-                <td class="name"><code>evt</code></td>
+                <td class="name"><code>move</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">string</span>
 
 
             
@@ -570,30 +334,7 @@
 
             
 
-            <td class="description last">Event object containing data captured by the listener.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>board</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Board object containing the current status of the board.</td>
+            <td class="description last">A 4-character string of the form "abcd", where c,d = row,col of square to move piece at a,b = row,col to.</td>
         </tr>
 
     
@@ -634,7 +375,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="events.js.html">events.js</a>, <a href="events.js.html#line71">line 71</a>
+        <a href="io.js.html">io.js</a>, <a href="io.js.html#line72">line 72</a>
     </li></ul></dd>
     
 
@@ -665,14 +406,178 @@
 
     
 
-    <h4 class="name" id="~mouseMove"><span class="type-signature">(inner) </span>mouseMove<span class="signature">(evt, board)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="~changeMoveIndicator"><span class="type-signature">(inner) </span>changeMoveIndicator<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Draws the current location of the selected piece while the left mouse button is held down.
+    Alternates colored square next to board which indicates whose turn it is.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="io.js.html">io.js</a>, <a href="io.js.html#line59">line 59</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~initSocketio"><span class="type-signature">(inner) </span>initSocketio<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Initializes client socket.io context, communicates with server to receive a new game.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="io.js.html">io.js</a>, <a href="io.js.html#line20">line 20</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~isDoubleJumpAvailable"><span class="type-signature">(inner) </span>isDoubleJumpAvailable<span class="signature">(move, pieceType)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Returns boolean representing whether there are any double jumps available.
 </div>
 
 
@@ -708,13 +613,13 @@
 
         <tr>
             
-                <td class="name"><code>evt</code></td>
+                <td class="name"><code>move</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">string</span>
 
 
             
@@ -724,20 +629,20 @@
 
             
 
-            <td class="description last">Event object containing data captured by the listener.</td>
+            <td class="description last">A 4-character string of the form "abcd", where c,d = row,col of square to move piece at a,b = row,col to.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>board</code></td>
+                <td class="name"><code>pieceType</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">integer</span>
 
 
             
@@ -747,7 +652,7 @@
 
             
 
-            <td class="description last">Board object containing the current status of the board.</td>
+            <td class="description last">The integer corresponding to the piece being examined.</td>
         </tr>
 
     
@@ -788,7 +693,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="events.js.html">events.js</a>, <a href="events.js.html#line92">line 92</a>
+        <a href="io.js.html">io.js</a>, <a href="io.js.html#line177">line 177</a>
     </li></ul></dd>
     
 
@@ -811,6 +716,28 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Double Jump is possible from the given move and piece.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -819,14 +746,14 @@
 
     
 
-    <h4 class="name" id="~mouseStart"><span class="type-signature">(inner) </span>mouseStart<span class="signature">(evt, board)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="~isValid"><span class="type-signature">(inner) </span>isValid<span class="signature">(move)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
 
     
 
 
 
 <div class="description">
-    Records the coordinates of where the piece is on a left mouse click.
+    Determines if a move is valid, given the current board and turn state.
 </div>
 
 
@@ -862,13 +789,13 @@
 
         <tr>
             
-                <td class="name"><code>evt</code></td>
+                <td class="name"><code>move</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">string</span>
 
 
             
@@ -878,30 +805,7 @@
 
             
 
-            <td class="description last">Event object containing data captured by the listener.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>board</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Board object containing the current status of the board.</td>
+            <td class="description last">A 4-character string of the form "abcd", where c,d = row,col of square to move piece at a,b = row,col to.</td>
         </tr>
 
     
@@ -942,7 +846,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="events.js.html">events.js</a>, <a href="events.js.html#line48">line 48</a>
+        <a href="io.js.html">io.js</a>, <a href="io.js.html#line91">line 91</a>
     </li></ul></dd>
     
 
@@ -965,6 +869,28 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Move is valid.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -973,14 +899,14 @@
 
     
 
-    <h4 class="name" id="~surrender"><span class="type-signature">(inner) </span>surrender<span class="signature">(board)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="~pieceAt"><span class="type-signature">(inner) </span>pieceAt<span class="signature">(row, col)</span><span class="type-signature"> &rarr; {integer}</span></h4>
 
     
 
 
 
 <div class="description">
-    Clears the pieces of the calling user from the board to forfeit the game.
+    Returns integer at row, col of the game board.
 </div>
 
 
@@ -1016,13 +942,13 @@
 
         <tr>
             
-                <td class="name"><code>board</code></td>
+                <td class="name"><code>row</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">integer</span>
 
 
             
@@ -1032,7 +958,30 @@
 
             
 
-            <td class="description last">Board object containing the current status of the board.</td>
+            <td class="description last">Row of game board.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>col</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">integer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Column of game board.</td>
         </tr>
 
     
@@ -1073,7 +1022,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="events.js.html">events.js</a>, <a href="events.js.html#line106">line 106</a>
+        <a href="io.js.html">io.js</a>, <a href="io.js.html#line163">line 163</a>
     </li></ul></dd>
     
 
@@ -1096,6 +1045,28 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Integer at row, col of game board.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">integer</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
