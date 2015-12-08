@@ -3,15 +3,22 @@
  * @module tests
  */
 
+/**
+ *  Initializes barebones game state for testing.
+ */
 function initTestGame() {
   initBoard();
 }
 
+/**
+ *  QUnit test driver (registerer).
+ */
 function tests() {
   QUnit.test("Red moves first", function(assert) {
     initTestGame();
     assert.equal(board.whiteMove, true, "board.whiteMove == true");
   });
+
   QUnit.test("Pieces only allowed to move one square diagonally", function(assert) {
     initTestGame();
     var validMoves = ["6251", "6253"];
@@ -29,7 +36,5 @@ function tests() {
                      "Move red 6,2 to " + i + "," + j + " is invalid");
       }
     }
-    //assert.equal(isValid(invalidMove), false, "Move red 6,2 to 5,2 is invalid");
-
   });
 }
