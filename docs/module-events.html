@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: draw</title>
+    <title>JSDoc: Module: events</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: draw</h1>
+    <h1 class="page-title">Module: events</h1>
 
     
 
@@ -38,7 +38,7 @@
     <div class="container-overview">
     
         
-            <div class="description">Draw module.</div>
+            <div class="description">Module for mouse events.</div>
         
 
         
@@ -87,7 +87,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="draw.js.html">draw.js</a>, <a href="draw.js.html#line1">line 1</a>
+        <a href="events.js.html">events.js</a>, <a href="events.js.html#line1">line 1</a>
     </li></ul></dd>
     
 
@@ -132,16 +132,26 @@
 
         
             
-<h4 class="name" id="~board_img"><span class="type-signature">(inner) </span>board_img<span class="type-signature"></span></h4>
+<h4 class="name" id="~mouseDown"><span class="type-signature">(inner) </span>mouseDown<span class="type-signature"> :boolean</span></h4>
 
 
 
 
 <div class="description">
-    WebGL texture, checker board image.
+    Determines if the left mouse button is being held down.
 </div>
 
 
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">boolean</span>
+
+
+        </li>
+    </ul>
 
 
 
@@ -176,7 +186,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="draw.js.html">draw.js</a>, <a href="draw.js.html#line9">line 9</a>
+        <a href="events.js.html">events.js</a>, <a href="events.js.html#line16">line 16</a>
     </li></ul></dd>
     
 
@@ -194,16 +204,26 @@
 
         
             
-<h4 class="name" id="~boardFlipped"><span class="type-signature">(inner) </span>boardFlipped<span class="type-signature"></span></h4>
+<h4 class="name" id="~movestr"><span class="type-signature">(inner) </span>movestr<span class="type-signature"> :string</span></h4>
 
 
 
 
 <div class="description">
-    Boolean that determines whether the board should be flipped for the current player.
+    Stores user provided moves.
 </div>
 
 
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+
+
+        </li>
+    </ul>
 
 
 
@@ -238,7 +258,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="draw.js.html">draw.js</a>, <a href="draw.js.html#line29">line 29</a>
+        <a href="events.js.html">events.js</a>, <a href="events.js.html#line10">line 10</a>
     </li></ul></dd>
     
 
@@ -256,16 +276,26 @@
 
         
             
-<h4 class="name" id="~canvas"><span class="type-signature">(inner) </span>canvas<span class="type-signature"></span></h4>
+<h4 class="name" id="~pieceBuffer"><span class="type-signature">(inner) </span>pieceBuffer<span class="type-signature"> :string</span></h4>
 
 
 
 
 <div class="description">
-    HTML5 canvas element with id "canvas".
+    Holds type of piece currently being selected.
 </div>
 
 
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+
+
+        </li>
+    </ul>
 
 
 
@@ -300,7 +330,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="draw.js.html">draw.js</a>, <a href="draw.js.html#line19">line 19</a>
+        <a href="events.js.html">events.js</a>, <a href="events.js.html#line22">line 22</a>
     </li></ul></dd>
     
 
@@ -318,78 +348,26 @@
 
         
             
-<h4 class="name" id="~context"><span class="type-signature">(inner) </span>context<span class="type-signature"></span></h4>
+<h4 class="name" id="~pieceLocation"><span class="type-signature">(inner) </span>pieceLocation<span class="type-signature"> :string</span></h4>
 
 
 
 
 <div class="description">
-    CanvasRenderingContext2D for HTML5 canvas element with id "canvas".
+    Saves the starting location of the piece as it is being dragged.
 </div>
 
 
 
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="draw.js.html">draw.js</a>, <a href="draw.js.html#line24">line 24</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
+    <h5>Type:</h5>
+    <ul>
+        <li>
             
-<h4 class="name" id="~pieces_img"><span class="type-signature">(inner) </span>pieces_img<span class="type-signature"></span></h4>
+<span class="param-type">string</span>
 
 
-
-
-<div class="description">
-    WebGL texture, checker pieces sprite sheet.
-</div>
-
-
+        </li>
+    </ul>
 
 
 
@@ -424,7 +402,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="draw.js.html">draw.js</a>, <a href="draw.js.html#line14">line 14</a>
+        <a href="events.js.html">events.js</a>, <a href="events.js.html#line28">line 28</a>
     </li></ul></dd>
     
 
@@ -451,14 +429,558 @@
 
     
 
-    <h4 class="name" id="~drawBoard"><span class="type-signature">(inner) </span>drawBoard<span class="signature">(board, mask)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="~loadCanvasListeners"><span class="type-signature">(inner) </span>loadCanvasListeners<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Draws checkerboard to canvas.
+    Loads listeners on the canvas element to check for mouse events.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="events.js.html">events.js</a>, <a href="events.js.html#line36">line 36</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~mouseEnd"><span class="type-signature">(inner) </span>mouseEnd<span class="signature">(evt, board)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Records the coordinates of where the piece was placed on release of the left mouse button.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>evt</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Event object containing data captured by the listener.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>board</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Board object containing the current status of the board.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="events.js.html">events.js</a>, <a href="events.js.html#line71">line 71</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~mouseMove"><span class="type-signature">(inner) </span>mouseMove<span class="signature">(evt, board)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Draws the current location of the selected piece while the left mouse button is held down.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>evt</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Event object containing data captured by the listener.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>board</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Board object containing the current status of the board.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="events.js.html">events.js</a>, <a href="events.js.html#line92">line 92</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~mouseStart"><span class="type-signature">(inner) </span>mouseStart<span class="signature">(evt, board)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Records the coordinates of where the piece is on a left mouse click.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>evt</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Event object containing data captured by the listener.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>board</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Board object containing the current status of the board.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="events.js.html">events.js</a>, <a href="events.js.html#line48">line 48</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~surrender"><span class="type-signature">(inner) </span>surrender<span class="signature">(board)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Clears the pieces of the calling user from the board to forfeit the game.
 </div>
 
 
@@ -510,30 +1032,7 @@
 
             
 
-            <td class="description last">A Javascript object containing the board state.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>mask</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">integer</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Index of piece to be masked (during piece drag), -1 otherwise.</td>
+            <td class="description last">Board object containing the current status of the board.</td>
         </tr>
 
     
@@ -574,348 +1073,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="draw.js.html">draw.js</a>, <a href="draw.js.html#line68">line 68</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="~drawPiece"><span class="type-signature">(inner) </span>drawPiece<span class="signature">(image_id, x, y)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Draws a checker piece at (x,y).
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>image_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">integer</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The integer associated with the piece to be drawn. 1: black, 2: red, 3: black king, 4: red king.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>x</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">float</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The x coordinate of the top left of the square to draw to.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>y</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">float</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The y coordinate of the top left of the square to draw to.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="draw.js.html">draw.js</a>, <a href="draw.js.html#line55">line 55</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="~loadCanvas"><span class="type-signature">(inner) </span>loadCanvas<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Initializes global context variable with CanvasRenderingContext2D from document element with id "canvas".
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="draw.js.html">draw.js</a>, <a href="draw.js.html#line34">line 34</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="~loadImages"><span class="type-signature">(inner) </span>loadImages<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Initializes image variables.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="draw.js.html">draw.js</a>, <a href="draw.js.html#line42">line 42</a>
+        <a href="events.js.html">events.js</a>, <a href="events.js.html#line106">line 106</a>
     </li></ul></dd>
     
 

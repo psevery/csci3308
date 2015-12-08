@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: usernames.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,57 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: usernames.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ *  userNames module.
+ *  @module usernames
+ */
+
+ /**
+ * username global 
+ * @global
+ * @type string
+ */
+var username;
+
+ /**
+ * oppenent username
+ * @global
+ * @type string
+ */
+var opponentName;
+
+/**
+ * set the player's username
+ */
+function setUsername(){
+  username = window.prompt("Nickname","");
+  var name = document.getElementById("user2");
+  name.innerHTML = username;
+  board.whitePlayer.nickname = username;
+}
 
 
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+/**
+ *  set oppenent's username
+ * @param {string} name
+ */
+function setOpponentName(name){
+  opponentName = name;
+  var name = document.getElementById("user1");
+  name.innerHTML = opponentName;
+}
+</code></pre>
+        </article>
+    </section>
 
 
 

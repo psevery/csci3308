@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: database.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,34 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: database.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ *  Database module.
+ *  @module database
+ */
 
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+/**
+ *  Login to the server with a username and displays the associated stats.
+ */
+function initDatabase(){
+  socket.emit('login', username);
+  socket.on('stats',function(user){
+    var stats = document.getElementById("stats");
+    stats.innerHTML = "Personal Stats:&lt;br>Times Logged In: "+user.stats.logins.toString()
+      +"&lt;br>Wins: "+user.stats.wins.toString()+"&lt;br>Losses: "+user.stats.losses.toString();
+  });
+}
+</code></pre>
+        </article>
+    </section>
 
 
 
