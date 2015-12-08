@@ -26,7 +26,9 @@ Run "npm install" in the base project directory (csci3308) to install the projec
 Edit server.js and uncomment either the local hosting or openshift sections
 Visit localhost:3000 in your browser to find the links to singleplayer and multiplayer modes.
 Visit localhost:3000/test.html to run the current test suite and view its output.
-To see documentation, run "python3 -m http.server 8000" in csci3308/docs, then visit localhost:8000 to see the documentation website.
+To see documentation, run "python3 -m http.server 8000" in csci3308/docs,
+then visit localhost:8000 to see the documentation website,
+or just view the pdf documents in the docs directory. (Note: the html to pdf converter didn't work perfectly, a few title got messed up).
 
 ***
 npm modules included:
